@@ -1,5 +1,5 @@
-#ifndef __SIGN_IN__
-#define __SIGN_IN__
+#ifndef __SIGN_IN_H__
+#define __SIGN_IN_H__
 
 #include <iostream>
 #include <string>
