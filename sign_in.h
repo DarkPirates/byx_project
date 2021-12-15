@@ -6,10 +6,9 @@
 #include <map>
 #include <cstdlib>
 
-using namespace std;
 
 //这是一个简单的非常好用的没有bug的登录接口，b_user是个map容器，键值对;
-int Sign_In(map<string,string> &b_user);
+int Sign_In(std::map<std::string,std::string> &b_user);
 
 
 
