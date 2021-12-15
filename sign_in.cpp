@@ -51,7 +51,7 @@ int Sign_In(map<string,string> &b_user)
                 for(flag = 0;flag < 3;flag++)
                 {
                     //错误的时候应该是有给机会的。。
-                    //来一手goto吧
+                    //经历3次循环，然后不行就直接结束程序
                     std::cout << "Password error" << endl;
                     cin >> user_name;
                     cin >> user_password;
