@@ -2,9 +2,24 @@
 
 
 //增加一个物品
-void Increase(std::map<std::string,int> &something,int price,std::string name)
+void Increase(std::map<std::string,int> &something,Commodity_Fruit a)
 {
-    something.insert(std::pair<std::string,int>(name,price));
+    something.insert(std::pair<std::string,int>(a.GetName(a),a.GetPrice(a)));
+}
+
+void Increase(std::map<std::string,int> &something,Commodity_Clothes a)
+{
+    something.insert(std::pair<std::string,int>(a.GetName(a),a.GetPrice(a)));
+}
+
+void Increase(std::map<std::string,int> &something,Commodity_Furniture a)
+{
+    something.insert(std::pair<std::string,int>(a.GetName(a),a.GetPrice(a)));
+}
+
+void Increase(std::map<std::string,int> &something,Commodity_Vegetables a)
+{
+    something.insert(std::pair<std::string,int>(a.GetName(a),a.GetPrice(a)));
 }
 
 //删除一个物品

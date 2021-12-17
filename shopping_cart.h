@@ -15,9 +15,13 @@
 #include <string>
 #include <map>
 #include <cstdlib>
+#include "commodity.h"
 
 //增加一个物品
-int Increase(std::map<std::string,int> &something);
+void Increase(std::map<std::string,int> &something,Commodity_Fruit a);
+void Increase(std::map<std::string,int> &something,Commodity_Clothes a);
+void Increase(std::map<std::string,int> &something,Commodity_Furniture a);
+void Increase(std::map<std::string,int> &something,Commodity_Vegetables a);
 
 //删除一个物品
 int Reduce(std::map<std::string,int> &something);
