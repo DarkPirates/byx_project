@@ -135,7 +135,7 @@ int Shopping(std::map<std::string,int> &my_shoppint_cart)
                     Increase(my_shoppint_cart,durian);
                     break;
                 default:
-                    break;
+                    return 0;
                 }
             }
             top:
@@ -325,7 +325,7 @@ int Shopping(std::map<std::string,int> &my_shoppint_cart)
                     Increase(my_shoppint_cart,bookshelf);
                     break;
                 default:
-                    break;
+                    return 0;
                 }
             }
             top_one:
@@ -421,7 +421,7 @@ int Shopping(std::map<std::string,int> &my_shoppint_cart)
                     Increase(my_shoppint_cart,coat);
                     break;
                 default:
-                    break;
+                    return 0;
                 }
             }
             top_two:
