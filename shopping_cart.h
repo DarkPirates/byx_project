@@ -24,7 +24,7 @@ void Increase(std::map<std::string,int> &something,Commodity_Furniture a);
 void Increase(std::map<std::string,int> &something,Commodity_Vegetables a);
 
 //删除一个物品
-int Reduce(std::map<std::string,int> &something);
+int Reduce(std::map<std::string,int> &something,std::string name);
 
 //改？改个屁，不准改，重新去选择
 //查?没啥好查的啊。。。。那就把结算一起写了好了

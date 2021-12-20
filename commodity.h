@@ -42,8 +42,18 @@ class Commodity_Fruit : public Commodity
 class Commodity_Vegetables : public Commodity
 {
     public:
+        ~Commodity_Vegetables();
         Commodity_Vegetables(int weight);
         int GetWeight(Commodity_Vegetables &a);
+        int GetPrice_();
+        std::string GetName_();
+        int SetPrice_(int a); 
+        void SetNmae_(const std::string name);
+    protected:
+        void SetNmae_One(const std::string name)
+        {
+            this ->m_name = name;
+        }
     private:
         int m_weight;
 };
@@ -54,6 +64,15 @@ class Commodity_Furniture : public Commodity
         Commodity_Furniture(int height,std::string material);
         int GetHeight(Commodity_Furniture a);
         std::string GetMaterial(Commodity_Furniture &a);
+        int GetPrice_();
+        std::string GetName_();
+        int SetPrice_(int a); 
+        void SetNmae_(const std::string name);    
+    protected:
+        void SetNmae_One(const std::string name)
+        {
+            this ->m_name = name;
+        }
     private:
         int m_height;
         std::string m_material;
@@ -64,6 +83,15 @@ class Commodity_Clothes : public Commodity
     public:
         Commodity_Clothes(std::string eason);
         std::string GetEason(Commodity_Clothes &a);
+        int GetPrice_();
+        std::string GetName_();
+        int SetPrice_(int a); 
+        void SetNmae_(const std::string name);    
+    protected:
+        void SetNmae_One(const std::string name)
+        {
+            this ->m_name = name;
+        }
     private:
         std::string m_eason;
 };

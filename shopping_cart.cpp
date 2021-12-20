@@ -36,13 +36,17 @@ int Reduce(std::map<std::string,int> &something,std::string name)
 /*
     如果是想做到那个选择多个购物车中的物品的话
     就得再弄一个map去储存选中的那一些商品，这样的话
-    比较麻烦（主要是我懒得写），那就要么全买
-    要么呢，就当场结账，不佳入购物车
+    比较麻烦（主要是我懒得写）
+    那就
+    要么全买
+    要么就删除咯=-=。
 */
 int Settlement(std::map<std::string,int> &something)
 {
-    for(std::map<std::string,int>::iterator iter = something.begin();iter != something.end();++iter)
+    std::map<std::string,int>::iterator  it;
+    for (it = something.begin(); it != something.end(); ++it)
     {
-        std::cout << iter ->first << " " << iter ->second << std::endl;
+        std::cout  << it->first  << " ";
+        std::cout  << it->second << std::endl;
     }
 }
