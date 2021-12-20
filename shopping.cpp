@@ -1,5 +1,25 @@
 #include "shopping.h"
 
+int InspectNum(Commodity_Vegetables &a)
+{
+    return a.GetQuantity();
+}
+
+int Inspect(Commodity_Vegetables &a)
+{
+    int b = InspectNum(a);
+    if(b == 0)
+    {
+        std::cout << "卖完了" << std::endl;
+        return -1;
+    }
+    else
+    {
+        std::cout << "操作成功" << std::endl;
+        a.SetQuantity(b - 1); 
+    }
+}
+
 int Shopping(std::map<std::string,int> &my_shoppint_cart)
 {
     while(1)
@@ -14,71 +34,86 @@ int Shopping(std::map<std::string,int> &my_shoppint_cart)
             return 0;
         }
         //冗长的构造商品的代码。。。。
-        Commodity_Fruit apple("21.12.1",1);              
-        
+        Commodity_Fruit apple("21.12.1",1);                
         apple.SetNmae_("apple");
         apple.SetPrice_(3);
+        apple.SetQuantity(2);
 
         Commodity_Fruit banana("21.12.1",1);
         banana.SetNmae_("Banana");
         banana.SetPrice_(2);
-        
+        banana.SetQuantity(1);
+
         Commodity_Fruit orange("22.1.1",1);
         orange.SetNmae_("orange");
         orange.SetPrice_(1);
+        orange.SetQuantity(0);
         
         Commodity_Fruit durian("21.12.3",20);
         durian.SetNmae_("Durian");      
         durian.SetPrice_(100);  
-        
+        durian.SetQuantity(0);
+
         Commodity_Vegetables pepper(4);
         pepper.SetNmae_("pepper");
         pepper.SetPrice_(4);
-        
+        pepper.SetQuantity(6);
+
         Commodity_Vegetables potato(5);
         potato.SetNmae_("potato");
         potato.SetPrice_(2);
+        potato.SetQuantity(1);
 
         Commodity_Vegetables tomato(3);
         tomato.SetNmae_("tomato");
         tomato.SetPrice_(3);
+        tomato.SetQuantity(0);
 
         Commodity_Vegetables eggplant(6);
         eggplant.SetNmae_("eggplant");
         eggplant.SetPrice_(10);  
+        eggplant.SetQuantity(0);
 
         Commodity_Furniture refrigerator(1,"nothing");
         refrigerator.SetNmae_("refrigerator");
         refrigerator.SetPrice_(5000);
+        refrigerator.SetQuantity(0);
 
         Commodity_Furniture washing_machine(2,"nothing");
         washing_machine.SetNmae_("washing_machine");
         washing_machine.SetPrice_(1000);
+        washing_machine.SetQuantity(1);
 
         Commodity_Furniture dishwasher(1,"nothing");
         dishwasher.SetNmae_("dishwasher");
         dishwasher.SetPrice_(1000);
+        dishwasher.SetQuantity(9);
 
         Commodity_Furniture bookshelf(2,"wood");
         bookshelf.SetNmae_("bookshelf");
         bookshelf.SetPrice_(300);
+        bookshelf.SetQuantity(2);
 
         Commodity_Clothes t_shirt("summer");
         t_shirt.SetNmae_("t_shirt");
         t_shirt.SetPrice_(30);
+        t_shirt.SetQuantity(5);
 
         Commodity_Clothes peaked_cap("all");
         peaked_cap.SetNmae_("peaked_cap");
         peaked_cap.SetPrice_(40);
+        peaked_cap.SetQuantity(0);
 
         Commodity_Clothes sweater("all");
         sweater.SetNmae_("sweater");
         sweater.SetPrice_(50);
+        sweater.SetQuantity(0);
 
         Commodity_Clothes coat("=-=");
         coat.SetNmae_("coat");
         coat.SetPrice_(100);
-        
+        coat.SetQuantity(100000000);
+
         std::cout << "此分类有以下商品" << std::endl;
         if(flag == 1)
         {
@@ -99,19 +134,56 @@ int Shopping(std::map<std::string,int> &my_shoppint_cart)
             std::cin >> choice;
             if(choice == 2)
             {
+                int num;
                 switch (flag)
                 {
                 case 1:
-                    std::cout << "获得苹果一个" << std::endl;
+                    num = apple.GetQuantity();
+                    if(num == 0)
+                    {
+                        std::cout << "卖完了" << std::endl;
+                    }
+                    else
+                    {
+                        std::cout << "获得苹果一个" << std::endl;
+                        apple.SetQuantity(num - 1);
+                    } 
                     break;
                 case 2:
-                    std::cout << "获得香蕉一个" << std::endl;
+                    num = banana.GetQuantity();
+                    if(num == 0)
+                    {
+                        std::cout << "卖完了" << std::endl;
+                    }
+                    else
+                    {
+                        std::cout << "获得香蕉一个" << std::endl;
+                        banana.SetQuantity(num - 1);
+                    } 
                     break;
                 case 3:
-                    std::cout << "获得橘子一个" << std::endl;
+                    num = orange.GetQuantity();
+                    if(num == 0)
+                    {
+                        std::cout << "卖完了" << std::endl;
+                    }
+                    else
+                    {
+                        std::cout << "获得橘子一个" << std::endl;
+                        orange.SetQuantity(num - 1);
+                    } 
                     break;
                 case 4:
-                    std::cout << "获得榴莲一个" << std::endl;
+                    num = durian.GetQuantity();
+                    if(num == 0)
+                    {
+                        std::cout << "卖完了" << std::endl;
+                    }
+                    else
+                    {
+                        std::cout << "获得榴莲一个" << std::endl;
+                        durian.SetQuantity(num - 1);
+                    } 
                     break;
                 default:
                    return 0;
@@ -119,20 +191,56 @@ int Shopping(std::map<std::string,int> &my_shoppint_cart)
             }
             else if(choice == 1)
             {
+                int num;
                 switch (flag)
                 {
                 case 1:
-                    Settlement(my_shoppint_cart);
-                    Increase(my_shoppint_cart,apple);
+                    num = apple.GetQuantity();
+                    if(num == 0)
+                    {
+                        std::cout << "卖完了" << std::endl;
+                    }
+                    else
+                    {
+                        apple.SetQuantity(num - 1);
+                        Increase(my_shoppint_cart,apple);
+                    }
                     break;
                 case 2:
-                    Increase(my_shoppint_cart,banana);
+                    num = banana.GetQuantity();
+                    if(num == 0)
+                    {
+                        std::cout << "卖完了" << std::endl;
+                    }
+                    else
+                    {
+                        banana.SetQuantity(num - 1);
+                        Increase(my_shoppint_cart,banana);
+                    }
                     break;
                 case 3:
-                    Increase(my_shoppint_cart,orange);
+                    num = orange.GetQuantity();
+                    if(num == 0)
+                    {
+                        std::cout << "卖完了" << std::endl;
+                    }
+                    else
+                    {
+                        orange.SetQuantity(num - 1);
+                        Increase(my_shoppint_cart,orange);
+                    }
                     break;
                 case 4:
-                    Increase(my_shoppint_cart,durian);
+                    num = durian.GetQuantity();
+                    if(num == 0)
+                    {
+                        std::cout << "卖完了" << std::endl;
+                    }
+                    else
+                    {
+                        durian.SetQuantity(num - 1);
+                        Increase(my_shoppint_cart,durian);
+                    }
                     break;
                 default:
                     return 0;
@@ -197,16 +305,16 @@ int Shopping(std::map<std::string,int> &my_shoppint_cart)
                 switch (flag)
                 {
                 case 1:
-                    std::cout << "获得辣椒一个" << std::endl;
+                    Inspect(pepper);
                     break;
                 case 2:
-                    std::cout << "获得土豆一个" << std::endl;
+                    Inspect(potato);
                     break;
                 case 3:
-                    std::cout << "获得西红柿一个" << std::endl;
+                    Inspect(tomato);
                     break;
                 case 4:
-                    std::cout << "获得番茄一个" << std::endl;
+                    Inspect(eggplant);
                     break;
                 default:
                    return 0;
@@ -217,7 +325,6 @@ int Shopping(std::map<std::string,int> &my_shoppint_cart)
                 switch (flag)
                 {
                 case 1:
-                    Settlement(my_shoppint_cart);
                     Increase(my_shoppint_cart,pepper);
                     break;
                 case 2:

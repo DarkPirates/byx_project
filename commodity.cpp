@@ -22,16 +22,25 @@ Commodity::~Commodity()
 {
 }
 
-
 int Commodity::GetPrice(Commodity &a)
 {
     return a.m_price;
+}
+
+int Commodity::GetQuantity()
+{
+    return m_quantity;
 }
 
 int Commodity::SetPrice(int b)
 {
     std::cout << "1" << std::endl;
     m_price = b;
+}
+
+int Commodity::SetQuantity(int a)
+{
+    m_quantity = a;
 }
 
 std::string Commodity::GetName(Commodity &a)
@@ -80,6 +89,16 @@ std::string Commodity_Fruit::GetName_()
     return m_name;
 }
 
+int Commodity_Fruit::GetQuantity()
+{
+    return m_quantity;
+}
+
+int Commodity_Fruit::SetQuantity(int a)
+{
+    m_quantity = a;
+}
+
 int Commodity_Fruit::SetPrice_(int a)
 { 
     this ->m_price = a;
@@ -120,6 +139,16 @@ int Commodity_Vegetables::GetPrice_()
 std::string Commodity_Vegetables::GetName_()
 {
     return m_name;
+}
+
+int Commodity_Vegetables::GetQuantity()
+{
+    return m_quantity;
+}
+
+int Commodity_Vegetables::SetQuantity(int a)
+{
+    m_quantity = a;
 }
 
 int Commodity_Vegetables::SetPrice_(int a)
@@ -172,6 +201,16 @@ void Commodity_Furniture::SetNmae_(const std::string name)
     Commodity_Furniture::SetNmae_One(name);
 }
 
+int Commodity_Furniture::GetQuantity()
+{
+    return m_quantity;
+}
+
+int Commodity_Furniture::SetQuantity(int a)
+{
+    m_quantity = a;
+}
+
 int Commodity_Furniture::GetHeight(Commodity_Furniture a)
 {
     return m_height;
@@ -204,6 +243,16 @@ int Commodity_Clothes::GetPrice_()
 std::string Commodity_Clothes::GetName_()
 {
     return m_name;
+}
+
+int Commodity_Clothes::GetQuantity()
+{
+    return m_quantity;
+}
+
+int Commodity_Clothes::SetQuantity(int a)
+{
+    m_quantity = a;
 }
 
 int Commodity_Clothes::SetPrice_(int a)
