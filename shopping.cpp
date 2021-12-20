@@ -145,7 +145,7 @@ int Shopping(std::map<std::string,int> &my_shoppint_cart)
             if(flag == 1)
             {
                 my_shoppint_cart.erase(my_shoppint_cart.begin(),my_shoppint_cart.end());
-                std::cout << "确定么，需要删除就输入2？我也忘了" << std::endl;
+                std::cout << "确定么，需要删除就输入2" << std::endl;
                 std::cin >> flag;
                 if(flag == 1)
                 {
@@ -240,7 +240,7 @@ int Shopping(std::map<std::string,int> &my_shoppint_cart)
             if(flag == 1)
             {
                 Settlement(my_shoppint_cart);
-                std::cout << "确定么，需要删除就输入2？我也忘了" << std::endl;
+                std::cout << "确定么，需要删除就输入2" << std::endl;
                 std::cin >> flag;
                 if(flag == 1)
                 {
@@ -335,7 +335,7 @@ int Shopping(std::map<std::string,int> &my_shoppint_cart)
             if(flag == 1)
             {
                 Settlement(my_shoppint_cart);
-                std::cout << "确定么，需要删除就输入2？我也忘了" << std::endl;
+                std::cout << "确定么，需要删除就输入2" << std::endl;
                 std::cin >> flag;
                 if(flag == 1)
                 {
@@ -431,7 +431,7 @@ int Shopping(std::map<std::string,int> &my_shoppint_cart)
             if(flag == 1)
             {
                 Settlement(my_shoppint_cart);
-                std::cout << "确定么，需要删除就输入2？我也忘了" << std::endl;
+                std::cout << "确定么，需要删除就输入2" << std::endl;
                 std::cin >> flag;
                 if(flag == 1)
                 {
