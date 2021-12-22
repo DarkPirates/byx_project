@@ -1,5 +1,11 @@
 #include "sign_in.h"
 
+const int ZERO      =   0;
+const int ONE       =   1;
+const int TWO       =   2;
+const int THREE     =   3;
+const int FOUR      =   4;
+const int ONE_      =  -1;
 
 int Sign_In(std::map<std::string,std::string> &b_user,std::map<std::string,std::string> &b_seller)
 {
@@ -11,13 +17,13 @@ int Sign_In(std::map<std::string,std::string> &b_user,std::map<std::string,std::
     std::cin >> msg ;
 
     std::cout << "Please enter your user name and password " << std::endl;
-    if(msg == 2)
+    if(msg == TWO)
     {
         //输入用户名和密码
         std::cin >> user_name;
         if(user_name == "#")
         {
-            return 0;
+            return ZERO;
         }
         std::cin >> user_password;
 
@@ -32,10 +38,10 @@ int Sign_In(std::map<std::string,std::string> &b_user,std::map<std::string,std::
             std::cin >> flag;
             if(flag)
             {
-                return 1;
+                return ONE;
             }
             else
-                return 0;
+                return ZERO;
 
         }
         else
@@ -48,11 +54,11 @@ int Sign_In(std::map<std::string,std::string> &b_user,std::map<std::string,std::
                 if(iter ->second == user_password)
                 {
                     std::cout << "Login successful" << std::endl;
-                    return 1;
+                    return ONE;
                 }
                 else
                 {                
-                    for(flag = 0;flag < 3;flag++)
+                    for(flag = ZERO;flag < THREE;flag++)
                     {
                         //错误的时候应该是有给机会的。。
                         //经历3次循环，然后不行就直接结束程序
@@ -65,31 +71,31 @@ int Sign_In(std::map<std::string,std::string> &b_user,std::map<std::string,std::
                             if(iter ->second == user_password)
                             {
                                 std::cout << "Login successful" << std::endl;
-                                return 1;
+                                return ONE;
                             }
                         }
                     }
                     std::cout << "..."<< std::endl;
-                    return 250;
+                    return ZERO;
                 }
             }
             else//没找到
             {
                 std::cout << "user error" << std::endl;
-                return 0; 
+                return ZERO; 
 
             }
         }
 
     }
-    else if(msg == 1)
+    else if(msg == ONE)
     {
         //输入用户名和密码
         std::string seller_name,seller_password;
         std::cin >> seller_name;
         if(user_name == "#")
         {
-            return 0;
+            return ZERO;
         }
         std::cin >> seller_password;
 
@@ -104,27 +110,27 @@ int Sign_In(std::map<std::string,std::string> &b_user,std::map<std::string,std::
             std::cin >> flag;
             if(flag)
             {
-                return 2;
+                return TWO;
             }
             else
-                return 0;
+                return ZERO;
 
         }
         else
         {
             //找到用户名所对应的键值对
             std::map<std::string,std::string>::iterator iter;
-            iter = b_seller.find(user_name);
+            iter = b_seller.find(seller_name);
             if(iter != b_seller.end())
             {
                 if(iter ->second == seller_password)
                 {
                     std::cout << "Login successful" << std::endl;
-                    return 2;
+                    return TWO;
                 }
                 else
                 {                
-                    for(flag = 0;flag < 3;flag++)
+                    for(flag = ZERO;flag < THREE;flag++)
                     {
                         //错误的时候应该是有给机会的。。
                         //经历3次循环，然后不行就直接结束程序
@@ -137,23 +143,22 @@ int Sign_In(std::map<std::string,std::string> &b_user,std::map<std::string,std::
                             if(iter ->second == seller_password)
                             {
                                 std::cout << "Login successful" << std::endl;
-                                return 2;
+                                return TWO;
                             }
                         }
                     }
                     std::cout << "..."<< std::endl;
-                    return 250;
+                    return ZERO;
                 }
             }
             else//没找到
             {
                 std::cout << "seller error" << std::endl;
-                return 0; 
-
+                return ZERO; 
             }
         }
     }
     else
-        return 0;
+        return ZERO;
     
 }
