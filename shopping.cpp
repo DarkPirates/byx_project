@@ -8,10 +8,11 @@ const int THREE     =       3;
 const int FOUR      =       4;
 const int ONE_      =      -1;
 const int LT        =   10010;
+const int YD        =   10086;
 
 
 //这个容器用来保存用户的地址,一个用户分配6个位置吧,用完就没了
-std::vector<std::string> b_addrss;
+//std::vector<std::string> b_addrss;
 
 
 int InspectNum_R(Commodity_Fruit &a)
@@ -386,6 +387,46 @@ int Shopping(
                 if(flag == ONE)
                 {
                     Settlement(my_shoppint_cart);
+                    /*if(b_addrss.size() == ZERO)
+                    {
+                        std::cout << "没地址.请输入你的地址捏" << std::endl;
+                        std::string m_addrss;
+                        std::cin >> m_addrss;
+                        b_addrss.push_back(m_addrss);
+                    }
+                    for(int i = ZERO;i < b_addrss.size();++i)
+                        std::cout << b_addrss[i] << std::endl;
+                    while(ONE)
+                    {
+                        std::cout << "是哪个呢?,需要增加(10010)或者删除(10086)吗?" << std::endl;
+                        std::cin >> flag;
+                        if(flag == LT)
+                        {
+                            std::cout << "请输入你的地址捏" << std::endl;
+                            std::string m_addrss;
+                            std::cin >> m_addrss;
+                            b_addrss.push_back(m_addrss);
+                        }
+                        if(flag == YD)
+                        {
+                            std::cout << "请输入地址捏" << std::endl;
+                            std::string m_addrss;
+                            std::cin >> m_addrss;
+                            for(int i = ZERO;i < b_addrss.size();++i)
+                            {
+                                if(b_addrss[i] == m_addrss)
+                                {
+                                    b_addrss.erase(b_addrss.begin() + i);
+                                }
+                            }
+                        }
+                        if(flag >= ZERO && flag <= FOUR)
+                        {
+                            std::cout << "ok" << std::endl;
+                            break;
+                        }
+                    }*/
+                    
                 }
                 else if(flag == TWO)
                 {
@@ -484,21 +525,47 @@ int Shopping(
                 if(flag == ONE)
                 {
                     Settlement(my_shoppint_cart);
-                }
-                else if(flag == TWO)
-                {
-                    std::cout << "输入你要删除的名字" << std::endl;;
-                    std::string _name;
-                    std::cin >> _name;
-                    Reduce(my_shoppint_cart,_name);
-                    Settlement(my_shoppint_cart);
-                    goto sert_one;
-                }
-                else
-                {
-                    goto top_one;
-                }
-                
+                    /*if(b_addrss.size() == ZERO)
+                    {
+                        std::cout << "没地址.请输入你的地址捏" << std::endl;
+                        std::string m_addrss;
+                        std::cin >> m_addrss;
+                        b_addrss.push_back(m_addrss);
+                    }
+                    for(int i = ZERO;i < b_addrss.size();++i)
+                        std::cout << b_addrss[i] << std::endl;
+                    while(ONE)
+                    {
+                        std::cout << "是哪个呢?,需要增加(10010)或者删除(10086)吗?" << std::endl;
+                        std::cin >> flag;
+                        if(flag == LT)
+                        {
+                            std::cout << "请输入你的地址捏" << std::endl;
+                            std::string m_addrss;
+                            std::cin >> m_addrss;
+                            b_addrss.push_back(m_addrss);
+                        }
+                        if(flag == YD)
+                        {
+                            std::cout << "请输入地址捏" << std::endl;
+                            std::string m_addrss;
+                            std::cin >> m_addrss;
+                            for(int i = ZERO;i < b_addrss.size();++i)
+                            {
+                                if(b_addrss[i] == m_addrss)
+                                {
+                                    b_addrss.erase(b_addrss.begin() + i);
+                                }
+                            }
+                        }
+                        if(flag >= ZERO && flag <= FOUR)
+                        {
+                            std::cout << "ok" << std::endl;
+                            break;
+                        }
+                    }
+                    
+                }*/
             }
             else if(flag == TWO)
             {
@@ -577,26 +644,53 @@ int Shopping(
             std::cin >> flag;
             if(flag == ONE)
             {
-                Settlement(my_shoppint_cart);
+               Settlement(my_shoppint_cart);
                 std::cout << "确定么，需要删除就输入2" << std::endl;
                 std::cin >> flag;
                 if(flag == ONE)
                 {
                     Settlement(my_shoppint_cart);
-                }
-                else if(flag == TWO)
-                {
-                    std::cout << "输入你要删除的名字" << std::endl;;
-                    std::string _name;
-                    std::cin >> _name;
-                    Reduce(my_shoppint_cart,_name);
-                    Settlement(my_shoppint_cart);
-                    goto sert_two;
-                }
-                else
-                {
-                    goto top_two;
-                }
+                    /*if(b_addrss.size() == ZERO)
+                    {
+                        std::cout << "没地址.请输入你的地址捏" << std::endl;
+                        std::string m_addrss;
+                        std::cin >> m_addrss;
+                        b_addrss.push_back(m_addrss);
+                    }
+                    for(int i = ZERO;i < b_addrss.size();++i)
+                        std::cout << b_addrss[i] << std::endl;
+                    while(ONE)
+                    {
+                        std::cout << "是哪个呢?,需要增加(10010)或者删除(10086)吗?" << std::endl;
+                        std::cin >> flag;
+                        if(flag == LT)
+                        {
+                            std::cout << "请输入你的地址捏" << std::endl;
+                            std::string m_addrss;
+                            std::cin >> m_addrss;
+                            b_addrss.push_back(m_addrss);
+                        }
+                        if(flag == YD)
+                        {
+                            std::cout << "请输入地址捏" << std::endl;
+                            std::string m_addrss;
+                            std::cin >> m_addrss;
+                            for(int i = ZERO;i < b_addrss.size();++i)
+                            {
+                                if(b_addrss[i] == m_addrss)
+                                {
+                                    b_addrss.erase(b_addrss.begin() + i);
+                                }
+                            }
+                        }
+                        if(flag >= ZERO && flag <= FOUR)
+                        {
+                            std::cout << "ok" << std::endl;
+                            break;
+                        }
+                    }
+                    
+                }*/
                 
             }
             else if(flag == TWO)
@@ -696,27 +790,53 @@ int Shopping(
                 std::cin >> flag;
                 if(flag == ONE)
                 {
-                    Settlement(my_shoppint_cart);
+                   Settlement(my_shoppint_cart);
                     std::cout << "确定么，需要删除就输入2" << std::endl;
                     std::cin >> flag;
                     if(flag == ONE)
                     {
                         Settlement(my_shoppint_cart);
-                    }
-                    else if(flag == TWO)
-                    {
-                        std::cout << "输入你要删除的名字" << std::endl;;
-                        std::string _name;
-                        std::cin >> _name;
-                        Reduce(my_shoppint_cart,_name);
-                        Settlement(my_shoppint_cart);
-                        goto sert_three;
-                    }
-                    else
-                    {
-                        goto top_three;
-                    }
-                    
+                       /* if(b_addrss.size() == ZERO)
+                        {
+                            std::cout << "没地址.请输入你的地址捏" << std::endl;
+                            std::string m_addrss;
+                            std::cin >> m_addrss;
+                            b_addrss.push_back(m_addrss);
+                        }
+                        for(int i = ZERO;i < b_addrss.size();++i)
+                            std::cout << b_addrss[i] << std::endl;
+                        while(ONE)
+                        {
+                            std::cout << "是哪个呢?,需要增加(10010)或者删除(10086)吗?" << std::endl;
+                            std::cin >> flag;
+                            if(flag == LT)
+                            {
+                                std::cout << "请输入你的地址捏" << std::endl;
+                                std::string m_addrss;
+                                std::cin >> m_addrss;
+                                b_addrss.push_back(m_addrss);
+                            }
+                            if(flag == YD)
+                            {
+                                std::cout << "请输入地址捏" << std::endl;
+                                std::string m_addrss;
+                                std::cin >> m_addrss;
+                                for(int i = ZERO;i < b_addrss.size();++i)
+                                {
+                                    if(b_addrss[i] == m_addrss)
+                                    {
+                                        b_addrss.erase(b_addrss.begin() + i);
+                                    }
+                                }
+                            }
+                            if(flag >= ZERO && flag <= FOUR)
+                            {
+                                std::cout << "ok" << std::endl;
+                                break;
+                            }
+                        }
+                        
+                    }*/
                 }
                 else if(flag == TWO)
                 {
@@ -741,5 +861,8 @@ int Shopping(
         case 4:
             break;
         }*/
+        }
+        }  
+    }
     }
 }
