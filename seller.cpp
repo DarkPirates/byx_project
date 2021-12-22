@@ -35,7 +35,7 @@ int InitSe(
             {
                 if(b_FU[i].GetName_() == y_name)
                 {
-                    b_FU.erase(i);
+                    b_FU.erase(b_FU.begin() + i);
                     continue;
                 }
             }
@@ -43,7 +43,7 @@ int InitSe(
             {
                 if(b_VT[i].GetName_() == y_name)
                 {
-                    b_VT.erase(i);
+                    b_VT.erase(b_VT.begin() + i);
                     continue;
                 }
             }
@@ -51,7 +51,7 @@ int InitSe(
             {
                 if(b_FI[i].GetName_() == y_name)
                 {
-                    b_FI.erase(i);
+                    b_FI.erase(b_FI.begin() + i);
                     continue;
                 }
             }
@@ -59,7 +59,7 @@ int InitSe(
             {
                 if(b_CT[i].GetName_() == y_name)
                 {
-                    b_CT.erase(i);
+                    b_CT.erase(b_CT.begin() + i);
                     continue;
                 }
             }

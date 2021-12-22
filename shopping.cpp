@@ -9,6 +9,11 @@ const int FOUR      =       4;
 const int ONE_      =      -1;
 const int LT        =   10010;
 
+
+//这个容器用来保存用户的地址,一个用户分配6个位置吧,用完就没了
+std::vector<std::string> b_addrss;
+
+
 int InspectNum_R(Commodity_Fruit &a)
 {
     return a.GetQuantity();
@@ -65,6 +70,7 @@ int Inspect_R(std::map<std::string,int> &my_shoppint_cart,Commodity_Fruit &a,int
     else if(c == ONE)
     {
         Increase(my_shoppint_cart,a);
+        a.SetQuantity(b - ONE);
     }
 }
 
@@ -84,6 +90,7 @@ int Inspect_F(std::map<std::string,int> &my_shoppint_cart,Commodity_Furniture &a
     else if(c == ONE)
     {
         Increase(my_shoppint_cart,a);
+        a.SetQuantity(b - ONE);
     }
 }
 
@@ -103,6 +110,7 @@ int Inspect_C(std::map<std::string,int> &my_shoppint_cart,Commodity_Clothes &a,i
     else if(c == ONE)
     {
         Increase(my_shoppint_cart,a);
+        a.SetQuantity(b - ONE);
     }
 }
 
