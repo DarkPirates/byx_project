@@ -622,7 +622,7 @@ int Shopping(
             }
             else
             {
-                std::cout << "1,2,3,4?dong?" << std::endl;
+                std::cout << "1,2,3,4?" << std::endl;
                 int flag;
                 std::cin >> flag;
                 if(flag == ONE)
@@ -639,7 +639,7 @@ int Shopping(
                     {
                         return ZERO;
                     }
-                    Inspect_R(my_shoppint_cart,b_FU[flag],choice);
+                    Inspect_R(my_shoppint_cart,b_FU[flag - 1],choice);
                     
                 }
                 if(flag == TWO)
@@ -656,7 +656,7 @@ int Shopping(
                     {
                         return ZERO;
                     }
-                    Inspect(my_shoppint_cart,b_VT[flag],choice);
+                    Inspect(my_shoppint_cart,b_VT[flag - 1],choice);
                 }
                 if(flag == THREE)
                 {
@@ -672,7 +672,7 @@ int Shopping(
                     {
                         return ZERO;
                     }
-                    Inspect_F(my_shoppint_cart,b_FI[flag],choice);
+                    Inspect_F(my_shoppint_cart,b_FI[flag - 1],choice);
                 }
                 if(flag == FOUR)
                 {
@@ -688,7 +688,7 @@ int Shopping(
                     {
                         return ZERO;
                     }
-                    Inspect_C(my_shoppint_cart,b_CT[flag],choice);
+                    Inspect_C(my_shoppint_cart,b_CT[flag - 1],choice);
                 }
                 top_three:
                 sert_three:

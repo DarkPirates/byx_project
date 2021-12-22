@@ -24,20 +24,25 @@ int main()
     std::vector<Commodity_Furniture> b_FI;
     std::vector<Commodity_Clothes> b_CT;
 
-    int a  = Sign_In(b_user,b_seller);
-    std::cout << a << std::endl;
-    if(a == ZERO)
+    while (ONE)
     {
-        return ZERO;
+        int a  = Sign_In(b_user,b_seller);
+        std::cout << a << std::endl;
+        if(a == ZERO)
+        {
+            return ZERO;
+        }
+        if(a == TWO)
+        {
+            InitSe( 
+                b_FU,b_VT,b_FI,b_CT
+                );
+        }
+        else
+            int b = Shopping(b_FU,b_VT,b_FI,b_CT,my_shoppint_cart);
     }
-    if(a == TWO)
-    {
-        InitSe( 
-            b_FU,b_VT,b_FI,b_CT
-            );
-    }
-    else
-        int b = Shopping(b_FU,b_VT,b_FI,b_CT,my_shoppint_cart);
+    
+    
    /* while(1)
     {
             
