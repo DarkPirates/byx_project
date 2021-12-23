@@ -21,7 +21,7 @@ int InitSe(
             )
 {
     loop:
-    std::cout << "你要加入新的商品还是删除商品呢?" << std::endl;
+    std::cout << "你要删除商品还是加入新的商品呢?" << std::endl;
     int flag_;
     std::cin >> flag_;
     if(flag_ == ONE)
