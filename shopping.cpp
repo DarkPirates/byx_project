@@ -123,18 +123,7 @@ int Shopping(
             std::map<std::string,int> &my_shoppint_cart
             )
 {
-    while(ONE)
-    {
-        int flag = 0;
-        int choice = 0;
-        std::cout << "选择你需要的种类,输入10010有特别选项" << std::endl;
-        std::cout << "1.水果类" << " " << "2.蔬菜类" << " " << "3.家具类" << " " << "4.衣服类" << std::endl;
-        std::cin >> flag;
-        if(flag == ZERO)
-        {
-            return ZERO;
-        }
-        //冗长的构造商品的代码。。。。
+    //冗长的构造商品的代码。。。。
         Commodity_Fruit apple("21.12.1",1);                
         apple.SetNmae_("apple");
         apple.SetPrice_(3);
@@ -214,10 +203,24 @@ int Shopping(
         coat.SetNmae_("coat");
         coat.SetPrice_(100);
         coat.SetQuantity(100000000);
+    while(ONE)
+    {
+        int flag_ = 0;
+        int choice = 0;
+        std::cout << "选择你需要的种类,输入10010有特别选项" << std::endl;
+        std::cout << "1.水果类" << " " << "2.蔬菜类" << " " << "3.家具类" << " " << "4.衣服类" << std::endl;
+        std::cin >> flag_;
+        std::cout << flag_ << std::endl;
 
-        std::cout << "此分类有以下商品" << std::endl;
-        if(flag == ONE)
+        if(flag_ == ZERO)
         {
+            return ZERO;
+        }
+        
+        std::cout << "此分类有以下商品" << std::endl;
+        if(flag_ == ONE)
+        {
+            int flag;
             loop:
             std::cout << "1.苹果" << " " << "2.香蕉" << " " << "3.橘子" << std::endl;
             std::cout << "4.榴莲" << " " << "nothing" << " " << "nothing"<< std::endl;
@@ -330,6 +333,8 @@ int Shopping(
                     }
                     
                 }
+
+            }   
             else if(flag == TWO)
             {
                 goto loop;
@@ -339,9 +344,11 @@ int Shopping(
                 continue;
             }          
         }
-        else if(flag == TWO)
+
+        else if(flag_ == TWO)
         {
-          loop_:
+            int flag;
+            loop_:
             std::cout << "1.辣椒" << " " << "2.土豆" << " " << "3.西红柿" << std::endl;
             std::cout << "4.茄子" << " " << "nothing" << " " << "nothing"<< std::endl;
             std::cout << "输入你想要选择的编号" << std::endl;
@@ -477,8 +484,9 @@ int Shopping(
                 continue;
             }            
         }
-        else if(flag == THREE)
+        else if(flag_ == THREE)
         {
+            int flag;
             loop_one:
             std::cout << "1.冰箱" << " " << "2.洗衣机" << " " << "3.洗碗机" << std::endl;
             std::cout << "4.书架" << " " << "nothing" << " " << "nothing"<< std::endl;
@@ -601,9 +609,11 @@ int Shopping(
                 continue;
             }            
         }
+        
 
-        else if(flag == FOUR)
+        else if(flag_ == FOUR)
         {
+            int flag;
             loop_two:
             std::cout << "1.T恤" << " " << "2.鸭舌帽" << " " << "3.卫衣" << std::endl;
             std::cout << "4.外套" << " " << "nothing" << " " << "nothing"<< std::endl;
@@ -741,9 +751,10 @@ int Shopping(
         case 4:
             break;
         }*/
-    }
-    else if(flag == LT)
+    
+        else if(flag_ == LT)
         {
+            int flag;
             //std::cout << "1723891729387173291" << std::endl;
             loop_three:
             //一个一个读取容器里边，如果都没有，那就退出
@@ -889,6 +900,5 @@ int Shopping(
                 }    
             }
         }
-    
-}
+        }  
 }
