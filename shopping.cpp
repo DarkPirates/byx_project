@@ -727,8 +727,24 @@ int Shopping(
                 continue;
             }            
         }
-        else if(flag == LT)
+        
+
+        /*
+        switch (flag)
         {
+        case 1: 
+            break;
+        case 2:
+            break;
+        case 3:
+            break;
+        case 4:
+            break;
+        }*/
+    }
+    else if(flag == LT)
+        {
+            //std::cout << "1723891729387173291" << std::endl;
             loop_three:
             //一个一个读取容器里边，如果都没有，那就退出
             //需要哪种就去对应种类的容器里面看.
@@ -873,19 +889,6 @@ int Shopping(
                 }    
             }
         }
-
-        /*
-        switch (flag)
-        {
-        case 1: 
-            break;
-        case 2:
-            break;
-        case 3:
-            break;
-        case 4:
-            break;
-        }*/
-    }
+    
 }
 }
