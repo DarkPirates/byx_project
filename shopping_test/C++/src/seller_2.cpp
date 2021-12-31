@@ -15,7 +15,7 @@ static const int success               =   1;//操作成功
 static const int change_commodity      =   3;//改动商品
 
 //出错函数
-void error_In()
+static void error_In()
 {
     std::cout << "输入错误!" << std::endl;
 }
@@ -23,7 +23,7 @@ void error_In()
 
 //这个呢,就是一个简单的根据用户输入来判断是否继续的程序
 //继续就返回true,不继续就返回false
-int go_On()
+static int go_On()
 {
     int go_on_flag;
     std::cin >> go_on_flag;

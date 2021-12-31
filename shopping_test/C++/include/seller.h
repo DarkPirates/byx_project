@@ -13,3 +13,8 @@ int InitSe(
             std::vector<Commodity_Furniture> &b_FI,
             std::vector<Commodity_Clothes> &b_CT
             );
+
+int Business(   std::vector<Commodity_Fruit> &fruit_item,
+                std::vector<Commodity_Vegetables> &vegetables_item,
+                std::vector<Commodity_Furniture> &furniture_item,
+                std::vector<Commodity_Clothes> &clothes_item);

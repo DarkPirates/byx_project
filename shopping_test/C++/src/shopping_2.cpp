@@ -27,7 +27,7 @@ static const int mode_3_furniture      =   3;	//家具模式
 static const int mode_4_clothes        =   4;	//衣服模式
 
 
-//这个容器用来保存用户的地址,一个用户分配6个位置吧,用完就没了
+//这个容器用来保存用户的地址
 std::vector<std::string> user_addrss;
 
 
@@ -52,7 +52,7 @@ int InspectNum_C(Commodity_Clothes &clothes)
 }
 
 //蔬菜购买
-int Inspect(std::map<std::string,int> &shoppint_cart,Commodity_Vegetables &vegetables_in,int user_input_signal)
+int Inspect(Shopping_cart_ shoppint_cart,Commodity_Vegetables &vegetables_in,int user_input_signal)
 {
     int surplus = InspectNum(vegetables_in);
     if(surplus == no_have)
@@ -68,7 +68,7 @@ int Inspect(std::map<std::string,int> &shoppint_cart,Commodity_Vegetables &veget
     }
     else if(user_input_signal == in_shopping_cart)
     {
-        Increase(shoppint_cart,vegetables_in);
+        shoppint_cart.Increase(shoppint_cart,vegetables_in);
         //这里-1是因为被购买了一件,所以需要把数量-1
         vegetables_in.SetQuantity(surplus - 1); 
     }

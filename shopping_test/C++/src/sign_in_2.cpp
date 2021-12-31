@@ -9,8 +9,8 @@ static const int need                   =   1;
 static const int needn_t                =   0;
 static const int login_successful       =   1;
 static const int login_faile            =  -1;
-static const int login_successful_user  =  10;
-static const int login_successful_seller=  20;
+static const int login_successful_user  =   1;
+static const int login_successful_seller=   2;
 //这是接收输入的帐号
 std::string input_Accounts()
 {
@@ -132,21 +132,22 @@ int logging_in( std::map<std::string,std::string> &user_sign,
         std::string name = input_Accounts();
         std::string password = input_Password();
         if(sign == sign_merchant)
+        {
             return_value = login_check_seller(seller_sign,name,password);
+            return return_value;
+        }
         else if(sign == sign_user)
+        {
             return_value = login_check_user(user_sign,name,password);
+            return return_value;
+        }
         else
             std::cout << "error input" << std::endl;
-        if(return_value == login_successful_user)
-            return login_successful_user;
-	else if(return_value == login_successful_seller)
-	    return login_successful_seller;
     }
     return login_faile;
 }
 
 //这是登陆接口
-//还有一个比较重要的,区分商人登陆
 int sign_In(std::map<std::string,std::string> &user_sign,
             std::map<std::string,std::string> &seller_sign)
 {
@@ -156,7 +157,5 @@ int sign_In(std::map<std::string,std::string> &user_sign,
     if(user_input_register == need)
         register_Accounts(user_sign,seller_sign);
     return_value = logging_in(user_sign,seller_sign);
-    if(return_value == login_faile)//好像不需要...但是上午就能写这么多了,不能耽误下午的事,下次再想
-        return login_faile;
     return return_value;
 }
