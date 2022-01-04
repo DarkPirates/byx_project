@@ -1,8 +1,9 @@
-#pragma once
+#ifndef __SELLER_H__
+#define __SELLER_H__
 
 #include "shopping.h"
 #include "commodity.h"
-#include "shopping_cart.h"
+#include "shopping_cart_2.h"
 #include "sign_in.h"
 #include <vector>
 #include <string>
@@ -18,3 +19,5 @@ int Business(   std::vector<Commodity_Fruit> &fruit_item,
                 std::vector<Commodity_Vegetables> &vegetables_item,
                 std::vector<Commodity_Furniture> &furniture_item,
                 std::vector<Commodity_Clothes> &clothes_item);
+
+#endif

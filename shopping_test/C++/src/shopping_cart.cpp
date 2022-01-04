@@ -2,24 +2,28 @@
 #include "shopping_cart_2.h"
 
 //这个要改.得在类中增加一个map容器,不然不好写....
+Shopping_cart_::Shopping_cart_()
+{
+}
+
 
 //增加一个物品,分别对应的是水果,蔬菜,家具,衣服
-void Shopping_cart_::Increase(std::map<std::string,int> &shopping_cart,Commodity_Fruit new_fruit)
+void Shopping_cart_::Increase_Fruit(std::map<std::string,int> &shopping_cart,Commodity_Fruit new_fruit)
 {
     shopping_cart.insert(std::pair<std::string,int>(new_fruit.GetName(new_fruit),new_fruit.GetPrice(new_fruit)));
 }
 
-void Shopping_cart_::Increase(std::map<std::string,int> &shopping_cart,Commodity_Vegetables new_vegetables)
+void Shopping_cart_::Increase_Vegetables(std::map<std::string,int> &shopping_cart,Commodity_Vegetables new_vegetables)
 {
     shopping_cart.insert(std::pair<std::string,int>(new_vegetables.GetName(new_vegetables),new_vegetables.GetPrice(new_vegetables)));
 }
 
-void Shopping_cart_::Increase(std::map<std::string,int> &shopping_cart,Commodity_Furniture new_furniture)
+void Shopping_cart_::Increase_Furniture(std::map<std::string,int> &shopping_cart,Commodity_Furniture new_furniture)
 {
     shopping_cart.insert(std::pair<std::string,int>(new_furniture.GetName(new_furniture),new_furniture.GetPrice(new_furniture)));
 }
 
-void Shopping_cart_::Increase(std::map<std::string,int> &shopping_cart,Commodity_Clothes new_clothes)
+void Shopping_cart_::Increase_Clothes(std::map<std::string,int> &shopping_cart,Commodity_Clothes new_clothes)
 {
     shopping_cart.insert(std::pair<std::string,int>(new_clothes.GetName(new_clothes),new_clothes.GetPrice(new_clothes)));
 }

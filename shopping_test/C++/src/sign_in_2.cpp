@@ -1,6 +1,6 @@
 #include "sign_in.h"
 
-static const int sign_merchant          =   0;
+static const int sign_merchant          =   2;
 static const int sign_user              =   1; 
 static const int success_sign           =   1;
 static const int fail_sign              =   0;
@@ -33,7 +33,8 @@ std::string input_Password()
 int Merchant_Or_User()
 {
     int input_flag;
-    std::cout << "是商人还是用户呢?" << std::endl;
+    std::cout << "是用户还是商人呢?" << std::endl;
+    std::cin >> input_flag;
     if(input_flag == sign_merchant)
         return sign_merchant;
     if(input_flag == sign_user)
@@ -142,6 +143,7 @@ int logging_in( std::map<std::string,std::string> &user_sign,
             return return_value;
         }
         else
+            std::cout << sign << std::endl;
             std::cout << "error input" << std::endl;
     }
     return login_faile;
@@ -157,5 +159,6 @@ int sign_In(std::map<std::string,std::string> &user_sign,
     if(user_input_register == need)
         register_Accounts(user_sign,seller_sign);
     return_value = logging_in(user_sign,seller_sign);
+    std::cout << return_value << std::endl;
     return return_value;
 }

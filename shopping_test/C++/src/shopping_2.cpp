@@ -1,15 +1,7 @@
 #include "shopping.h"
-#include <vector>
 
 //这里定义的数字大多用于返回值,或者是用于区分用户输入,以便给出相应的动作
-static const int ZERO      =       0;
-static const int ONE       =       1;
-static const int TWO       =       2;
-static const int THREE     =       3;
-static const int FOUR      =       4;
-static const int ONE_      =      -1;
-static const int LT        =   10010;
-static const int YD        =   10086;
+
 static const int in_shopping_cart      =   1; 	//加入购物车
 static const int settlement            =   2;	//商户
 static const int no_have               =   0;	//没有了
@@ -25,11 +17,51 @@ static const int mode_1_fruit          =   1; 	//水果模式
 static const int mode_2_vegetables     =   2;	//蔬菜模式
 static const int mode_3_furniture      =   3;	//家具模式
 static const int mode_4_clothes        =   4;	//衣服模式
-
+static const int newly_added           =   1;   //新增地址
+static const int delete_addrss         =   2;   //删除地址 
 
 //这个容器用来保存用户的地址
 std::vector<std::string> user_addrss;
 
+//新增地址
+void newly_Added(std::vector<std::string> &user_addrss)
+{
+    std::string addrss_input;
+    std::cout << "input addrss" << std::endl;
+    std::cin >> addrss_input;
+    user_addrss.push_back(addrss_input);
+}
+
+void delete_Addrss(std::vector<std::string> &user_addrss)
+{
+    int addrss_input;
+    std::cout << "第几个" << std::endl;
+    std::cin >> addrss_input;
+    std::vector<std::string>::iterator it = user_addrss.begin() + addrss_input;
+    user_addrss.erase(it);
+}
+
+//选择配送地址
+int distribution_Address(std::vector<std::string> &user_addrss)
+{
+    int choice;
+    for(int i = 0;i < user_addrss.size();i++)
+        std::cout << user_addrss[i] << std::endl;
+    std::cin >> choice;
+    if(choice == no_have)
+    {
+        std::cout << "新增还是减少" << std::endl;
+        std::cin >> choice;
+        if(choice == newly_added)
+            newly_Added(user_addrss);
+        else if(choice == delete_addrss)
+            delete_Addrss(user_addrss);
+    }
+    std::cout << "地址选择完成" <<std::endl;
+}
+
+//构造一个购物车的类
+Shopping_cart_ use_shopping_cart;
 
 int InspectNum_R(Commodity_Fruit &fruit)
 {
@@ -52,8 +84,8 @@ int InspectNum_C(Commodity_Clothes &clothes)
 }
 
 //蔬菜购买
-int Inspect(Shopping_cart_ shoppint_cart,Commodity_Vegetables &vegetables_in,int user_input_signal)
-{
+int Inspect(std::map<std::string,int> &shoppint_cart,Commodity_Vegetables &vegetables_in,int user_input_signal)
+{  
     int surplus = InspectNum(vegetables_in);
     if(surplus == no_have)
     {
@@ -62,13 +94,15 @@ int Inspect(Shopping_cart_ shoppint_cart,Commodity_Vegetables &vegetables_in,int
     }
     if(user_input_signal == settlement)
     {
+        distribution_Address(user_addrss);
         std::cout << "操作成功" << std::endl;
         //这里-1是因为被购买了一件,所以需要把数量-1
         vegetables_in.SetQuantity(surplus - 1); 
     }
     else if(user_input_signal == in_shopping_cart)
     {
-        shoppint_cart.Increase(shoppint_cart,vegetables_in);
+        distribution_Address(user_addrss);
+        use_shopping_cart.Increase_Vegetables(shoppint_cart,vegetables_in);
         //这里-1是因为被购买了一件,所以需要把数量-1
         vegetables_in.SetQuantity(surplus - 1); 
     }
@@ -76,7 +110,7 @@ int Inspect(Shopping_cart_ shoppint_cart,Commodity_Vegetables &vegetables_in,int
 
 //水果购买
 int Inspect_R(std::map<std::string,int> &shoppint_cart,Commodity_Fruit &fruit_in,int user_input_signal)
-{
+{  
     int surplus = InspectNum_R(fruit_in);
     if(surplus == no_have)
     {
@@ -85,13 +119,15 @@ int Inspect_R(std::map<std::string,int> &shoppint_cart,Commodity_Fruit &fruit_in
     }
     if(user_input_signal == settlement)
     {
+        distribution_Address(user_addrss);
         std::cout << "操作成功" << std::endl;
         //这里-1是因为被购买了一件,所以需要把数量-1
         fruit_in.SetQuantity(surplus - 1); 
     }
     else if(user_input_signal == in_shopping_cart)
     {
-        Increase(shoppint_cart,fruit_in);
+        distribution_Address(user_addrss);
+        use_shopping_cart.Increase_Fruit(shoppint_cart,fruit_in);
         //这里-1是因为被购买了一件,所以需要把数量-1
         fruit_in.SetQuantity(surplus - 1);
     }
@@ -99,7 +135,7 @@ int Inspect_R(std::map<std::string,int> &shoppint_cart,Commodity_Fruit &fruit_in
 
 //家具购买
 int Inspect_F(std::map<std::string,int> &shoppint_cart,Commodity_Furniture &furniture_in,int user_input_signal)
-{
+{  
     int surplus = InspectNum_F(furniture_in);
     if(surplus == no_have)
     {
@@ -108,13 +144,15 @@ int Inspect_F(std::map<std::string,int> &shoppint_cart,Commodity_Furniture &furn
     }
     if(user_input_signal == settlement)
     {
+        distribution_Address(user_addrss);
         std::cout << "操作成功" << std::endl;
         //这里-1是因为被购买了一件,所以需要把数量-1
         furniture_in.SetQuantity(surplus - 1); 
     }
     else if(user_input_signal == in_shopping_cart)
     {
-        Increase(shoppint_cart,furniture_in);
+        distribution_Address(user_addrss);
+        use_shopping_cart.Increase_Furniture(shoppint_cart,furniture_in);
         //这里-1是因为被购买了一件,所以需要把数量-1
         furniture_in.SetQuantity(surplus - 1);
     }
@@ -122,22 +160,24 @@ int Inspect_F(std::map<std::string,int> &shoppint_cart,Commodity_Furniture &furn
 
 //衣服购买
 int Inspect_C(std::map<std::string,int> &shoppint_cart,Commodity_Clothes &clothes_in,int user_input_signal)
-{
+{  
     int surplus = InspectNum_C(clothes_in);
-    if(surplus == ZERO)
+    if(surplus == no_have)
     {
         std::cout << "卖完了" << std::endl;
         return program_interrupt;
     }
     if(user_input_signal == settlement)
     {
+        distribution_Address(user_addrss);
         std::cout << "操作成功" << std::endl;
         //这里-1是因为被购买了一件,所以需要把数量-1
         clothes_in.SetQuantity(surplus - 1); 
     }
     else if(user_input_signal == in_shopping_cart)
     {
-        Increase(shoppint_cart,clothes_in);
+        distribution_Address(user_addrss);
+        use_shopping_cart.Increase_Clothes(shoppint_cart,clothes_in);
         //这里-1是因为被购买了一件,所以需要把数量-1
         clothes_in.SetQuantity(surplus - 1);
     }
@@ -317,7 +357,8 @@ int Shopping(
                 std::vector<Commodity_Clothes> &clothes_item,
                 std::map<std::string,int> &shoppint_cart
             )
-{        
+{      
+    user_addrss.push_back("=-=");
     while(dead_cycle)
     {
         int mode_choice = user_In_Mode();
