@@ -1,585 +1,397 @@
 #include "shopping.h"
 
-int InspectNum(Commodity_Vegetables &a)
+//这里定义的数字大多用于返回值,或者是用于区分用户输入,以便给出相应的动作
+const static int PROGRAM_INTERRUPT     =  -1;
+const static int NO_HAVE               =   0;	//没有了
+const static int DON_T_CONTINUE        =   0;	//不跳过
+const static int IN_SHOPPING_CART      =   1; 	//加入购物车
+const static int NEWLY_ADDED           =   1;   //新增地址
+const static int GO_ON                 =   1;	//继续
+const static int DEAD_CYLUE            =   1;	//死循环
+const static int FRUIT_TYPE            =   1;	//水果类
+const static int MODE_1_FRUIT          =   1; 	//水果模式
+const static int DELETE_ADDRSS         =   2;   //删除地址
+const static int MODE_2_VEGETABLES     =   2;	//蔬菜模式
+const static int VEGETABLES_TYPE       =   2;	//蔬菜类
+const static int SETTLEMENT            =   2;	//商户
+const static int FURNITURE_TYPE        =   3;	//家具类
+const static int MODE_3_FURNITURE      =   3;	//家具模式
+const static int CLOTHES_TYPE          =   4;	//衣服类
+const static int MODE_4_CLOTHES        =   4;	//衣服模式
+
+
+
+//输出函数
+void std_cout(std::string in_a_word)
 {
-    return a.GetQuantity();
+    std::cout << in_a_word << std::endl;
+}
+ 
+
+//这个容器用来保存用户的地址
+std::vector<std::string> user_addrss;
+
+//新增地址
+void newly_Added(std::vector<std::string> &user_addrss)
+{
+    std::string addrss_input = "";
+    std_cout("输入地址:");
+    std::cin >> addrss_input;
+    user_addrss.push_back(addrss_input);
 }
 
-int Inspect(Commodity_Vegetables &a)
+void delete_Addrss(std::vector<std::string> &user_addrss)
 {
-    int b = InspectNum(a);
-    if(b == 0)
+    int addrss_input = -2;
+    std_cout("删除第几个呢");
+    std::cin >> addrss_input;
+    std::vector<std::string>::iterator it = user_addrss.begin() + addrss_input;
+    user_addrss.erase(it);
+}
+
+//选择配送地址
+int distribution_Address(std::vector<std::string> &user_addrss)
+{
+    int choice = -2;
+    for(int i = 0;i < user_addrss.size();i++)
+        std::cout << user_addrss[i] << std::endl;
+    std::cin >> choice;
+    if(choice == NO_HAVE)
     {
-        std::cout << "卖完了" << std::endl;
-        return -1;
+        std_cout("选择第几个地址?");
+        std::cin >> choice;
+        if(choice == NEWLY_ADDED)
+            newly_Added(user_addrss);
+        else if(choice == DELETE_ADDRSS)
+            delete_Addrss(user_addrss);
+    }
+    std::cout << "地址选择完成" <<std::endl;
+}
+
+//构造一个购物车的类
+Shopping_cart_ use_shopping_cart;
+
+int InspectNum_R(Commodity_Fruit &fruit)
+{
+    return fruit.GetQuantity();
+}
+
+int InspectNum(Commodity_Vegetables &vegetable)
+{
+    return vegetable.GetQuantity();
+}
+
+int InspectNum_F(Commodity_Furniture &furniture)
+{
+    return furniture.GetQuantity();
+}
+
+int InspectNum_C(Commodity_Clothes &clothes)
+{
+    return clothes.GetQuantity();
+}
+
+//蔬菜购买
+int Inspect(std::map<std::string,int> &shoppint_cart,Commodity_Vegetables &vegetables_in,int user_input_signal)
+{  
+    int surplus = InspectNum(vegetables_in);
+    if(surplus == NO_HAVE)
+    {
+        std_cout("没货了");
+        return PROGRAM_INTERRUPT;
+    }
+    if(user_input_signal == SETTLEMENT)
+    {
+        distribution_Address(user_addrss);
+        std_cout("操作成功");
+        //这里-1是因为被购买了一件,所以需要把数量-1
+        vegetables_in.SetQuantity(surplus - 1); 
+    }
+    else if(user_input_signal == IN_SHOPPING_CART)
+    {
+        distribution_Address(user_addrss);
+        use_shopping_cart.Increase_Vegetables(shoppint_cart,vegetables_in);
+        //这里-1是因为被购买了一件,所以需要把数量-1
+        vegetables_in.SetQuantity(surplus - 1); 
+    }
+}
+
+//水果购买
+int Inspect_R(std::map<std::string,int> &shoppint_cart,Commodity_Fruit &fruit_in,int user_input_signal)
+{  
+    int surplus = InspectNum_R(fruit_in);
+    if(surplus == NO_HAVE)
+    {
+        std_cout("没货了");
+        return PROGRAM_INTERRUPT;
+    }
+    if(user_input_signal == SETTLEMENT)
+    {
+        distribution_Address(user_addrss);
+        std_cout("操作成功");
+        //这里-1是因为被购买了一件,所以需要把数量-1
+        fruit_in.SetQuantity(surplus - 1); 
+    }
+    else if(user_input_signal == IN_SHOPPING_CART)
+    {
+        distribution_Address(user_addrss);
+        use_shopping_cart.Increase_Fruit(shoppint_cart,fruit_in);
+        //这里-1是因为被购买了一件,所以需要把数量-1
+        fruit_in.SetQuantity(surplus - 1);
+    }
+}
+
+//家具购买
+int Inspect_F(std::map<std::string,int> &shoppint_cart,Commodity_Furniture &furniture_in,int user_input_signal)
+{  
+    int surplus = InspectNum_F(furniture_in);
+    if(surplus == NO_HAVE)
+    {
+        std_cout("没货了");
+        return PROGRAM_INTERRUPT;
+    }
+    if(user_input_signal == SETTLEMENT)
+    {
+        distribution_Address(user_addrss);
+        std_cout("操作成功");
+        //这里-1是因为被购买了一件,所以需要把数量-1
+        furniture_in.SetQuantity(surplus - 1); 
+    }
+    else if(user_input_signal == IN_SHOPPING_CART)
+    {
+        distribution_Address(user_addrss);
+        use_shopping_cart.Increase_Furniture(shoppint_cart,furniture_in);
+        //这里-1是因为被购买了一件,所以需要把数量-1
+        furniture_in.SetQuantity(surplus - 1);
+    }
+}
+
+//衣服购买
+int Inspect_C(std::map<std::string,int> &shoppint_cart,Commodity_Clothes &clothes_in,int user_input_signal)
+{  
+    int surplus = InspectNum_C(clothes_in);
+    if(surplus == NO_HAVE)
+    {
+        std_cout("没货了");
+        return PROGRAM_INTERRUPT;
+    }
+    if(user_input_signal == SETTLEMENT)
+    {
+        distribution_Address(user_addrss);
+        std_cout("操作成功");
+        //这里-1是因为被购买了一件,所以需要把数量-1
+        clothes_in.SetQuantity(surplus - 1); 
+    }
+    else if(user_input_signal == IN_SHOPPING_CART)
+    {
+        distribution_Address(user_addrss);
+        use_shopping_cart.Increase_Clothes(shoppint_cart,clothes_in);
+        //这里-1是因为被购买了一件,所以需要把数量-1
+        clothes_in.SetQuantity(surplus - 1);
+    }
+}
+/*************************************
+ * 
+ * 
+ * 
+ * 
+ * 
+ * ***********************************/
+//出错函数
+void error_In()
+{
+    std_cout("输入出错");
+}
+
+/**************************************
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * 
+ * *////////////////////////////////
+
+//获得用户输入,用于选择类型
+int user_In_Mode()
+{
+    int user_in = -2;
+    std_cout("选择商品类,水果,蔬菜,家具,衣服");
+    std::cin >> user_in;
+    if(user_in == MODE_1_FRUIT)
+    {
+        return MODE_1_FRUIT;
+    }
+    else if(user_in == MODE_2_VEGETABLES)
+    {    
+    	return MODE_2_VEGETABLES;
+    }
+    else if(user_in == MODE_3_FURNITURE)
+    {    
+        return MODE_3_FURNITURE;
+    }
+    else if(user_in == MODE_4_CLOTHES)
+    {
+        return MODE_4_CLOTHES;
     }
     else
     {
-        std::cout << "操作成功" << std::endl;
-        a.SetQuantity(b - 1); 
+        error_In();
     }
 }
 
-int Shopping(std::map<std::string,int> &my_shoppint_cart)
+//一个遍历(水果)vector容器的函数
+void ergodic_Vector_Fruit(std::vector<Commodity_Fruit> &commodity_item)
 {
-    while(1)
+    for(int i = 0;i < commodity_item.size();++i)
     {
-        int flag = 0;
-        int choice = 0;
-        std::cout << "选择你需要的种类" << std::endl;
-        std::cout << "1.水果类" << " " << "2.蔬菜类" << " " << "3.家具类" << " " << "4.衣服类" << std::endl;
-        std::cin >> flag;
-        if(flag == 0)
+        std::cout << commodity_item[i].GetName_() << "  " << commodity_item[i].GetPrice_() << std::endl;
+    }
+}
+
+//一个遍历(蔬菜)vector容器的函数
+void ergodic_Vector_Vegetables(std::vector<Commodity_Vegetables> &commodity_item)
+{
+    for(int i = 0;i < commodity_item.size();++i)
+    {
+        std::cout << commodity_item[i].GetName_() << "  " << commodity_item[i].GetPrice_() << std::endl;
+    }
+}
+
+//一个遍历(家具)vector容器的函数
+void ergodic_Vector_Furniture(std::vector<Commodity_Furniture> &commodity_item)
+{
+    for(int i = 0;i < commodity_item.size();++i)
+    {
+        std::cout << commodity_item[i].GetName_() << "  " << commodity_item[i].GetPrice_() << std::endl;
+    }
+}
+
+//一个遍历(衣服)vector容器的函数
+void ergodic_Vector_Clothes(std::vector<Commodity_Clothes> &commodity_item)
+{
+    for(int i = 0;i < commodity_item.size();++i)
+    {
+        std::cout << commodity_item[i].GetName_() << "  " << commodity_item[i].GetPrice_() << std::endl;
+    }
+}
+
+//这是一个选择第几个的函数
+int user_Choice_Commodity()
+{
+    std_cout("需要第几个");
+    int user_in = -2;
+    std::cin >> user_in;
+    return user_in;
+}
+
+//这是一个选择结算还是加入购物车的函数
+int user_Choice_Settlement()
+{
+    int user_in = -2;
+    std::cin >> user_in;
+    if(user_in != SETTLEMENT && user_in != IN_SHOPPING_CART)
+    {
+        error_In();
+        return PROGRAM_INTERRUPT;
+    }
+    return user_in;
+}
+
+//选择是否继续
+int keep_On()
+{
+    int in_user = -2;
+    std::cin >> in_user;
+    return in_user;
+}
+
+//模式1.是选择了水果
+void mode_Fruit(std::vector<Commodity_Fruit> &fruit_item,std::map<std::string,int> &shoppint_cart)
+{
+    while(DEAD_CYLUE)
+    {
+        ergodic_Vector_Fruit(fruit_item);
+        Inspect_R(shoppint_cart,fruit_item[user_Choice_Commodity()],user_Choice_Settlement()); 
+        int keep_on_flag = keep_On();
+        if(!keep_on_flag)
         {
-            return 0;
-        }
-        //冗长的构造商品的代码。。。。
-        Commodity_Fruit apple("21.12.1",1);                
-        apple.SetNmae_("apple");
-        apple.SetPrice_(3);
-        apple.SetQuantity(2);
-
-        Commodity_Fruit banana("21.12.1",1);
-        banana.SetNmae_("Banana");
-        banana.SetPrice_(2);
-        banana.SetQuantity(1);
-
-        Commodity_Fruit orange("22.1.1",1);
-        orange.SetNmae_("orange");
-        orange.SetPrice_(1);
-        orange.SetQuantity(0);
-        
-        Commodity_Fruit durian("21.12.3",20);
-        durian.SetNmae_("Durian");      
-        durian.SetPrice_(100);  
-        durian.SetQuantity(0);
-
-        Commodity_Vegetables pepper(4);
-        pepper.SetNmae_("pepper");
-        pepper.SetPrice_(4);
-        pepper.SetQuantity(6);
-
-        Commodity_Vegetables potato(5);
-        potato.SetNmae_("potato");
-        potato.SetPrice_(2);
-        potato.SetQuantity(1);
-
-        Commodity_Vegetables tomato(3);
-        tomato.SetNmae_("tomato");
-        tomato.SetPrice_(3);
-        tomato.SetQuantity(0);
-
-        Commodity_Vegetables eggplant(6);
-        eggplant.SetNmae_("eggplant");
-        eggplant.SetPrice_(10);  
-        eggplant.SetQuantity(0);
-
-        Commodity_Furniture refrigerator(1,"nothing");
-        refrigerator.SetNmae_("refrigerator");
-        refrigerator.SetPrice_(5000);
-        refrigerator.SetQuantity(0);
-
-        Commodity_Furniture washing_machine(2,"nothing");
-        washing_machine.SetNmae_("washing_machine");
-        washing_machine.SetPrice_(1000);
-        washing_machine.SetQuantity(1);
-
-        Commodity_Furniture dishwasher(1,"nothing");
-        dishwasher.SetNmae_("dishwasher");
-        dishwasher.SetPrice_(1000);
-        dishwasher.SetQuantity(9);
-
-        Commodity_Furniture bookshelf(2,"wood");
-        bookshelf.SetNmae_("bookshelf");
-        bookshelf.SetPrice_(300);
-        bookshelf.SetQuantity(2);
-
-        Commodity_Clothes t_shirt("summer");
-        t_shirt.SetNmae_("t_shirt");
-        t_shirt.SetPrice_(30);
-        t_shirt.SetQuantity(5);
-
-        Commodity_Clothes peaked_cap("all");
-        peaked_cap.SetNmae_("peaked_cap");
-        peaked_cap.SetPrice_(40);
-        peaked_cap.SetQuantity(0);
-
-        Commodity_Clothes sweater("all");
-        sweater.SetNmae_("sweater");
-        sweater.SetPrice_(50);
-        sweater.SetQuantity(0);
-
-        Commodity_Clothes coat("=-=");
-        coat.SetNmae_("coat");
-        coat.SetPrice_(100);
-        coat.SetQuantity(100000000);
-
-        std::cout << "此分类有以下商品" << std::endl;
-        if(flag == 1)
-        {
-            loop:
-            std::cout << "1.苹果" << " " << "2.香蕉" << " " << "3.橘子" << std::endl;
-            std::cout << "4.榴莲" << " " << "nothing" << " " << "nothing"<< std::endl;
-            std::cout << "输入你想要选择的编号" << std::endl;
-            std::cin >> flag;
-            if(flag > 4)
-            {
-                while(1)
-                {
-                    std::cout << "输入错误，重来" << std::endl;
-                    std::cin >> flag;
-                }
-            }
-            std::cout << "加入购物车（1）？还是立即购买呢（2）？" << std::endl;
-            std::cin >> choice;
-            if(choice == 2)
-            {
-                int num;
-                switch (flag)
-                {
-                case 1:
-                    num = apple.GetQuantity();
-                    if(num == 0)
-                    {
-                        std::cout << "卖完了" << std::endl;
-                    }
-                    else
-                    {
-                        std::cout << "获得苹果一个" << std::endl;
-                        apple.SetQuantity(num - 1);
-                    } 
-                    break;
-                case 2:
-                    num = banana.GetQuantity();
-                    if(num == 0)
-                    {
-                        std::cout << "卖完了" << std::endl;
-                    }
-                    else
-                    {
-                        std::cout << "获得香蕉一个" << std::endl;
-                        banana.SetQuantity(num - 1);
-                    } 
-                    break;
-                case 3:
-                    num = orange.GetQuantity();
-                    if(num == 0)
-                    {
-                        std::cout << "卖完了" << std::endl;
-                    }
-                    else
-                    {
-                        std::cout << "获得橘子一个" << std::endl;
-                        orange.SetQuantity(num - 1);
-                    } 
-                    break;
-                case 4:
-                    num = durian.GetQuantity();
-                    if(num == 0)
-                    {
-                        std::cout << "卖完了" << std::endl;
-                    }
-                    else
-                    {
-                        std::cout << "获得榴莲一个" << std::endl;
-                        durian.SetQuantity(num - 1);
-                    } 
-                    break;
-                default:
-                   return 0;
-                }
-            }
-            else if(choice == 1)
-            {
-                int num;
-                switch (flag)
-                {
-                case 1:
-                    num = apple.GetQuantity();
-                    if(num == 0)
-                    {
-                        std::cout << "卖完了" << std::endl;
-                    }
-                    else
-                    {
-                        apple.SetQuantity(num - 1);
-                        Increase(my_shoppint_cart,apple);
-                    }
-                    break;
-                case 2:
-                    num = banana.GetQuantity();
-                    if(num == 0)
-                    {
-                        std::cout << "卖完了" << std::endl;
-                    }
-                    else
-                    {
-                        banana.SetQuantity(num - 1);
-                        Increase(my_shoppint_cart,banana);
-                    }
-                    break;
-                case 3:
-                    num = orange.GetQuantity();
-                    if(num == 0)
-                    {
-                        std::cout << "卖完了" << std::endl;
-                    }
-                    else
-                    {
-                        orange.SetQuantity(num - 1);
-                        Increase(my_shoppint_cart,orange);
-                    }
-                    break;
-                case 4:
-                    num = durian.GetQuantity();
-                    if(num == 0)
-                    {
-                        std::cout << "卖完了" << std::endl;
-                    }
-                    else
-                    {
-                        durian.SetQuantity(num - 1);
-                        Increase(my_shoppint_cart,durian);
-                    }
-                    break;
-                default:
-                    return 0;
-                }
-            }
-            top:
-            sert:
-            std::cout << "结算（1）,返回上层（2），返回类别（3）" << std::endl;
-            std::cin >> flag;
-            if(flag == 1)
-            {
-                my_shoppint_cart.erase(my_shoppint_cart.begin(),my_shoppint_cart.end());
-                std::cout << "确定么，需要删除就输入2" << std::endl;
-                std::cin >> flag;
-                if(flag == 1)
-                {
-                    Settlement(my_shoppint_cart);
-                }
-                else if(flag == 2)
-                {
-                    std::cout << "输入你要删除的名字" << std::endl;;
-                    std::string _name;
-                    std::cin >> _name;
-                    Reduce(my_shoppint_cart,_name);
-                    Settlement(my_shoppint_cart);
-                    goto sert;
-                }
-                else
-                {
-                    goto top;
-                }
-                
-            }
-            else if(flag == 2)
-            {
-                goto loop;
-            }  
-            else if(flag == 3)
-            {
-                continue;
-            }          
-        }
-        else if(flag == 2)
-        {
-          loop_:
-            std::cout << "1.辣椒" << " " << "2.土豆" << " " << "3.西红柿" << std::endl;
-            std::cout << "4.茄子" << " " << "nothing" << " " << "nothing"<< std::endl;
-            std::cout << "输入你想要选择的编号" << std::endl;
-            std::cin >> flag;
-            if(flag > 4)
-            {
-                while(1)
-                {
-                    std::cout << "输入错误，重来" << std::endl;
-                    std::cin >> flag;
-                }
-            }
-            std::cout << "加入购物车（1）？还是立即购买呢（2）？" << std::endl;
-            std::cin >> choice;
-            if(choice == 2)
-            {
-                switch (flag)
-                {
-                case 1:
-                    Inspect(pepper);
-                    break;
-                case 2:
-                    Inspect(potato);
-                    break;
-                case 3:
-                    Inspect(tomato);
-                    break;
-                case 4:
-                    Inspect(eggplant);
-                    break;
-                default:
-                   return 0;
-                }
-            }
-            else if(choice == 1)
-            {
-                switch (flag)
-                {
-                case 1:
-                    Increase(my_shoppint_cart,pepper);
-                    break;
-                case 2:
-                    Increase(my_shoppint_cart,potato);
-                    break;
-                case 3:
-                    Increase(my_shoppint_cart,tomato);
-                    break;
-                case 4:
-                    Increase(my_shoppint_cart,eggplant);
-                    break;
-                default:
-                    break;
-                }
-            }
-            top_:
-            sert_:
-            std::cout << "结算（1）,返回上层（2），返回类别（3）" << std::endl;
-            std::cin >> flag;
-            if(flag == 1)
-            {
-                Settlement(my_shoppint_cart);
-                std::cout << "确定么，需要删除就输入2" << std::endl;
-                std::cin >> flag;
-                if(flag == 1)
-                {
-                    Settlement(my_shoppint_cart);
-                }
-                else if(flag == 2)
-                {
-                    std::cout << "输入你要删除的名字" << std::endl;;
-                    std::string _name;
-                    std::cin >> _name;
-                    Reduce(my_shoppint_cart,_name);
-                    Settlement(my_shoppint_cart);
-                    goto sert_;
-                }
-                else
-                {
-                    goto top_;
-                }
-                
-            }
-            else if(flag == 2)
-            {
-                goto loop_;
-            }  
-            else if(flag == 3)
-            {
-                continue;
-            }            
-        }
-        else if(flag == 3)
-        {
-            loop_one:
-            std::cout << "1.冰箱" << " " << "2.洗衣机" << " " << "3.洗碗机" << std::endl;
-            std::cout << "4.书架" << " " << "nothing" << " " << "nothing"<< std::endl;
-            std::cout << "输入你想要选择的编号" << std::endl;
-            std::cin >> flag;
-            if(flag > 4)
-            {
-                while(1)
-                {
-                    std::cout << "输入错误，重来" << std::endl;
-                    std::cin >> flag;
-                }
-            }
-            std::cout << "加入购物车（1）？还是立即购买呢（2）？" << std::endl;
-            std::cin >> choice;
-            if(choice == 2)
-            {
-                switch (flag)
-                {
-                case 1:
-                    std::cout << "获得冰箱一个" << std::endl;
-                    break;
-                case 2:
-                    std::cout << "获得洗衣机一个" << std::endl;
-                    break;
-                case 3:
-                    std::cout << "获得洗碗机一个" << std::endl;
-                    break;
-                case 4:
-                    std::cout << "获得书架一个" << std::endl;
-                    break;
-                default:
-                   return 0;
-                }
-            }
-            else if(choice == 1)
-            {
-                switch (flag)
-                {
-                case 1:
-                    Settlement(my_shoppint_cart);
-                    Increase(my_shoppint_cart,refrigerator);
-                    break;
-                case 2:
-                    Increase(my_shoppint_cart,washing_machine);
-                    break;
-                case 3:
-                    Increase(my_shoppint_cart,dishwasher);
-                    break;
-                case 4:
-                    Increase(my_shoppint_cart,bookshelf);
-                    break;
-                default:
-                    return 0;
-                }
-            }
-            top_one:
-            sert_one:
-            std::cout << "结算（1）,返回上层（2），返回类别（3）" << std::endl;
-            std::cin >> flag;
-            if(flag == 1)
-            {
-                Settlement(my_shoppint_cart);
-                std::cout << "确定么，需要删除就输入2" << std::endl;
-                std::cin >> flag;
-                if(flag == 1)
-                {
-                    Settlement(my_shoppint_cart);
-                }
-                else if(flag == 2)
-                {
-                    std::cout << "输入你要删除的名字" << std::endl;;
-                    std::string _name;
-                    std::cin >> _name;
-                    Reduce(my_shoppint_cart,_name);
-                    Settlement(my_shoppint_cart);
-                    goto sert_one;
-                }
-                else
-                {
-                    goto top_one;
-                }
-                
-            }
-            else if(flag == 2)
-            {
-                goto loop_one;
-            }  
-            else if(flag == 3)
-            {
-                continue;
-            }            
-        }
-
-        else if(flag == 4)
-        {
-            loop_two:
-            std::cout << "1.T恤" << " " << "2.鸭舌帽" << " " << "3.卫衣" << std::endl;
-            std::cout << "4.外套" << " " << "nothing" << " " << "nothing"<< std::endl;
-            std::cout << "输入你想要选择的编号" << std::endl;
-            std::cin >> flag;
-            if(flag > 4)
-            {
-                while(1)
-                {
-                    std::cout << "输入错误，重来" << std::endl;
-                    std::cin >> flag;
-                }
-            }
-            std::cout << "加入购物车（1）？还是立即购买呢（2）？" << std::endl;
-            std::cin >> choice;
-            if(choice == 2)
-            {
-                switch (flag)
-                {
-                case 1:
-                    std::cout << "获得T恤一个" << std::endl;
-                    break;
-                case 2:
-                    std::cout << "获得鸭舌帽一个" << std::endl;
-                    break;
-                case 3:
-                    std::cout << "获得卫衣一个" << std::endl;
-                    break;
-                case 4:
-                    std::cout << "获得外套一个" << std::endl;
-                    break;
-                default:
-                   return 0;
-                }
-            }
-            else if(choice == 1)
-            {
-                switch (flag)
-                {
-                case 1:
-                    Settlement(my_shoppint_cart);
-                    Increase(my_shoppint_cart,t_shirt);
-                    break;
-                case 2:
-                    Increase(my_shoppint_cart,peaked_cap);
-                    break;
-                case 3:
-                    Increase(my_shoppint_cart,sweater);
-                    break;
-                case 4:
-                    Increase(my_shoppint_cart,coat);
-                    break;
-                default:
-                    return 0;
-                }
-            }
-            top_two:
-            sert_two:
-            std::cout << "结算（1）,返回上层（2），返回类别（3）" << std::endl;
-            std::cin >> flag;
-            if(flag == 1)
-            {
-                Settlement(my_shoppint_cart);
-                std::cout << "确定么，需要删除就输入2" << std::endl;
-                std::cin >> flag;
-                if(flag == 1)
-                {
-                    Settlement(my_shoppint_cart);
-                }
-                else if(flag == 2)
-                {
-                    std::cout << "输入你要删除的名字" << std::endl;;
-                    std::string _name;
-                    std::cin >> _name;
-                    Reduce(my_shoppint_cart,_name);
-                    Settlement(my_shoppint_cart);
-                    goto sert_two;
-                }
-                else
-                {
-                    goto top_two;
-                }
-                
-            }
-            else if(flag == 2)
-            {
-                goto loop_two;
-            }  
-            else if(flag == 3)
-            {
-                continue;
-            }            
-        }
-
-        /*
-        switch (flag)
-        {
-        case 1: 
             break;
-        case 2:
+        }
+    }
+}
+
+//模式2.是选择了蔬菜
+void mode_Vegetables(std::vector<Commodity_Vegetables> &vegetables_item,std::map<std::string,int> &shoppint_cart)
+{
+    while(DEAD_CYLUE)
+    {
+        ergodic_Vector_Vegetables(vegetables_item);
+        Inspect(shoppint_cart,vegetables_item[user_Choice_Commodity()],user_Choice_Settlement()); 
+        int keep_on_flag = keep_On();
+        if(!keep_on_flag)
+        {
             break;
-        case 3:
+        }
+    }
+    
+}
+
+//模式3.是选择了家具
+void mode_Furniture(std::vector<Commodity_Furniture> &furniture_item,std::map<std::string,int> &shoppint_cart)
+{
+    while(DEAD_CYLUE)
+    {
+        ergodic_Vector_Furniture(furniture_item);
+        Inspect_F(shoppint_cart,furniture_item[user_Choice_Commodity()],user_Choice_Settlement());
+        int keep_on_flag = keep_On();
+        if(!keep_on_flag)
+        {
             break;
-        case 4:
+        }
+    }
+}
+
+//模式4.是选择了衣服
+void mode_Clothes(std::vector<Commodity_Clothes> &clothes_item,std::map<std::string,int> &shoppint_cart)
+{
+    while(DEAD_CYLUE)
+    {
+        ergodic_Vector_Clothes(clothes_item);
+        Inspect_C(shoppint_cart,clothes_item[user_Choice_Commodity()],user_Choice_Settlement());
+        int keep_on_flag = keep_On();
+        if(!keep_on_flag)
+        {
             break;
-        }*/
+        }
+    }
+}
+
+int Shopping(
+                std::vector<Commodity_Fruit> &fruit_item,
+                std::vector<Commodity_Vegetables> &vegetables_item,
+                std::vector<Commodity_Furniture> &furniture_item,
+                std::vector<Commodity_Clothes> &clothes_item,
+                std::map<std::string,int> &shoppint_cart
+            )
+{      
+    user_addrss.push_back("=-=");
+    while(DEAD_CYLUE)
+    {
+        int mode_choice = user_In_Mode();
+        if (mode_choice == MODE_1_FRUIT)
+            mode_Fruit(fruit_item,shoppint_cart);
+        else if(mode_choice == MODE_2_VEGETABLES)
+            mode_Vegetables(vegetables_item,shoppint_cart);
+        else if(mode_choice == MODE_3_FURNITURE)
+            mode_Furniture(furniture_item,shoppint_cart);
+        else if(mode_choice == MODE_4_CLOTHES)
+            mode_Clothes(clothes_item,shoppint_cart);
+        else
+        {
+           error_In();
+           break; 
+        }
     }
 }
