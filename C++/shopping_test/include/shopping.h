@@ -2,7 +2,7 @@
 #define __SHOPPING_H__
 
 
-#include "shopping_cart_2.h"
+#include "shopping_cart.h"
 #include "commodity.h"
 #include "sign_in.h"
 #include "seller.h"

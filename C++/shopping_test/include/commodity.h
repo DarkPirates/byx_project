@@ -8,13 +8,13 @@ class Commodity
     public:
         Commodity();
         ~Commodity();
-        Commodity(int price,std::string name);
-        int GetPrice(Commodity &a);
+        Commodity(int price,std::string commodity_name);
+        int GetPrice();
         int GetQuantity();
-        std::string GetName(Commodity &a);
-        virtual int SetQuantity(int a);
-        virtual int SetPrice(int b);
-        virtual std::string SetName(const std::string b);
+        std::string GetName();
+        virtual int SetQuantity(int new_quantity);
+        virtual int SetPrice(int new_price);
+        virtual std::string SetName(const std::string new_name);
     protected:
         int m_quantity;
         int m_price;
@@ -26,13 +26,14 @@ class Commodity_Fruit : public Commodity
     public:
         ~Commodity_Fruit();
         Commodity_Fruit(std::string exp,int manufacture);       
-        std::string GetExp(Commodity_Fruit a);
-        int GetManufacture(Commodity_Fruit a);
+        
+        int GetManufacture();
         int GetPrice_();
         int GetQuantity();
-        int SetQuantity(int a);
+        int SetQuantity(int quantity);
+	int SetPrice_(int price); 
+	std::string GetExp();
         std::string GetName_();
-        int SetPrice_(int a); 
         void SetNmae_(const std::string name);    
     protected:
         void SetNmae_One(const std::string name)
@@ -49,12 +50,12 @@ class Commodity_Vegetables : public Commodity
     public:
         ~Commodity_Vegetables();
         Commodity_Vegetables(int weight);
-        int GetWeight(Commodity_Vegetables &a);
-        int GetPrice_();
-        std::string GetName_();
+        int GetWeight();
+        int GetPrice_();        
         int GetQuantity();
-        int SetQuantity(int a);
-        int SetPrice_(int a); 
+        int SetQuantity(int quantity);
+        int SetPrice_(int price); 
+	std::string GetName_();
         void SetNmae_(const std::string name);
     protected:
         void SetNmae_One(const std::string name)
@@ -69,13 +70,13 @@ class Commodity_Furniture : public Commodity
 {
     public:
         Commodity_Furniture(int height,std::string material);
-        int GetHeight(Commodity_Furniture a);
-        std::string GetMaterial(Commodity_Furniture &a);
+        int GetHeight();
         int GetPrice_();
-        std::string GetName_();
         int GetQuantity();
-        int SetQuantity(int a);
-        int SetPrice_(int a); 
+        int SetQuantity(int quantity);
+        int SetPrice_(int price); 
+	std::string GetMaterial();
+        std::string GetName_();
         void SetNmae_(const std::string name);    
     protected:
         void SetNmae_One(const std::string name)
@@ -91,12 +92,12 @@ class Commodity_Clothes : public Commodity
 {
     public:
         Commodity_Clothes(std::string eason);
-        std::string GetEason(Commodity_Clothes &a);
         int GetPrice_();
-        std::string GetName_();
         int GetQuantity();
-        int SetQuantity(int a);
-        int SetPrice_(int a); 
+        int SetQuantity(int quantity);
+        int SetPrice_(int price);
+	std::string GetName_();
+	std::string GetEason(); 
         void SetNmae_(const std::string name);    
     protected:
         void SetNmae_One(const std::string name)

@@ -1,5 +1,5 @@
-#ifndef __SHOPPING_CART_2_H__
-#define __SHOPPING_CART_2_H__
+#ifndef __SHOPPING_CART_H__
+#define __SHOPPING_CART_H__
 
 #include <iostream>
 #include <string>
