@@ -1,25 +1,30 @@
 #include "seller.h"
 
-static const int go_on                 =   1; //继续
-static const int don_t_continue        =   0;//不继续
-static const int dead_cycle            =   1;//死循环
-static const int fruit_type            =   1;//水果类型
-static const int vegetables_type       =   2;//蔬菜类型
-static const int furniture_type        =   3;//家具类型
-static const int clothes_type          =   4;//衣服类型
-static const int increase_commodity    =   1;//增加商品
-static const int delete_commodity      =   0;//减少商品
-static const int sign_out              =   0;//登陆失败
-static const int find_error            =  -1;//没找到
-static const int success               =   1;//操作成功
-static const int change_commodity      =   3;//改动商品
+const static int FIND_ERROR            =  -1;//没找到
+const static int DELETE_COMMODITY      =   0;//减少商品
+const static int SIGN_OUT              =   0;//登陆失败
+const static int DON_T_CONTINUE        =   0;//不继续
+const static int GO_ON                 =   1; //继续
+const static int INCREASE_COMMODITY    =   1;//增加商品
+const static int DEAD_CYCLE            =   1;//死循环
+const static int FRUIT_TYPE            =   1;//水果类型
+const static int SUCCESS               =   1;//操作成功
+const static int VEGETABLES_TYPE       =   2;//蔬菜类型
+const static int FURNITURE_TYPE        =   3;//家具类型
+const static int CHANGE_COMMODITY      =   3;//改动商品
+const static int CLOTHES_TYPE          =   4;//衣服类型
+
+//输出函数
+void std_cout(std::string in_a_word)
+{
+    std::cout << in_a_word << std::endl;
+}
 
 //出错函数
 static void error_In()
 {
-    std::cout << "输入错误!" << std::endl;
+    std_cout("输入出错");
 }
-
 
 //这个呢,就是一个简单的根据用户输入来判断是否继续的程序
 //继续就返回true,不继续就返回false
@@ -27,12 +32,12 @@ static int go_On()
 {
     int go_on_flag;
     std::cin >> go_on_flag;
-    while(dead_cycle)
+    while(DEAD_CYCLE)
     {
-        if(go_on_flag == go_on)
-            return 1;
-        else if(go_on_flag==don_t_continue)
-            return 0;
+        if(go_on_flag == GO_ON)
+            return GO_ON;
+        else if(go_on_flag==DON_T_CONTINUE)
+            return DON_T_CONTINUE;
         else
             error_In();
     }
@@ -42,7 +47,7 @@ static int go_On()
 std::string obtain_Commodity_Name()
 {
     std::string name;
-    std::cout << "输入你要删除的商品名" << std::endl;
+    std_cout("输入商品名");
     std::cin >> name;
     return name;
 }
@@ -106,18 +111,18 @@ int insert_Item(std::vector<Commodity_Fruit> &fruit_item,
                 std::vector<Commodity_Clothes> &clothes_item)
 {
     int commodity_type;
-    while(dead_cycle)
+    while(DEAD_CYCLE)
     {
         std::cin >> commodity_type;
-        if(commodity_type == fruit_type)
+        if(commodity_type == FRUIT_TYPE)
             type_Fruit(fruit_item);
-        else if(commodity_type == vegetables_type)
+        else if(commodity_type == VEGETABLES_TYPE)
             type_Vegetables(vegetables_item);
-        else if(commodity_type == furniture_type)
+        else if(commodity_type == FURNITURE_TYPE)
             type_Furniture(furniture_item);
-        else if(commodity_type == clothes_type)
+        else if(commodity_type == CLOTHES_TYPE)
             type_Clothes(clothes_item);
-        else if(commodity_type == don_t_continue)
+        else if(commodity_type == DON_T_CONTINUE)
             break;
         else
             error_In();
@@ -150,7 +155,7 @@ int delete_Fruit(std::vector<Commodity_Fruit> &fruit_item)
     } 
     if(fruit_item[i].GetName_() != input_name)  
     {
-        return find_error;
+        return FIND_ERROR;
     }  
 }
 
@@ -168,7 +173,7 @@ int delete_Vegetables(std::vector<Commodity_Vegetables> &vegetables_item)
     }  
     if(vegetables_item[i].GetName_() != input_name)  
     {
-        return find_error;
+        return FIND_ERROR;
     } 
 }
 
@@ -186,7 +191,7 @@ int delete_Furniture(std::vector<Commodity_Furniture> &furniture_item)
     }   
     if(furniture_item[i].GetName_() != input_name)  
     {
-        return find_error;
+        return FIND_ERROR;
     }
 }
 
@@ -204,7 +209,7 @@ int delete_Clothes(std::vector<Commodity_Clothes> &clothes_item)
     } 
     if(clothes_item[i].GetName_() != input_name)  
     {
-        return find_error;
+        return FIND_ERROR;
     }
 }
 
@@ -215,34 +220,36 @@ int delete_Choice( std::vector<Commodity_Fruit> &fruit_item,
                     std::vector<Commodity_Clothes> &clothes_item)
 {
     int commodity_type,input_go_on,return_value;
-    while (dead_cycle)
+    while (DEAD_CYCLE)
     {
         std::cin >> commodity_type;
-        if(commodity_type == fruit_type)
+        if(commodity_type == FRUIT_TYPE)
             return_value = delete_Fruit(fruit_item);
-        else if(commodity_type == vegetables_type)
+        else if(commodity_type == VEGETABLES_TYPE)
             return_value = delete_Vegetables(vegetables_item);
-        else if(commodity_type == furniture_type)
+        else if(commodity_type == FURNITURE_TYPE)
             return_value = delete_Furniture(furniture_item);
-        else if(commodity_type == clothes_type)
+        else if(commodity_type == CLOTHES_TYPE)
             return_value = delete_Clothes(clothes_item);
-        else if(commodity_type == don_t_continue)
+        else if(commodity_type == DON_T_CONTINUE)
             break;
         else
             error_In();  
-        if(return_value == find_error)
+        if(return_value == FIND_ERROR)
         {
-            std::cout << "没找到你所需要的商品,是否继续?" << std::endl;
+            std_cout("没找到,是否继续");
             std::cin >> input_go_on;
-            if(input_go_on == don_t_continue)
-                return don_t_continue;
+            if(input_go_on == DON_T_CONTINUE)
+                return DON_T_CONTINUE;
         }
         else
         {
-            std::cout << "是否继续?" << std::endl;
+            std_cout("是否继续");
             std::cin >> input_go_on;
-            if(input_go_on == don_t_continue)
-                return don_t_continue;
+            if(input_go_on == DON_T_CONTINUE)
+            {
+                return DON_T_CONTINUE;
+            }
         }
     }
     
@@ -259,12 +266,12 @@ int change_Fruit(std::vector<Commodity_Fruit> &fruit_item,std::string name,
         {
             fruit_item[i].SetPrice_(price);
             fruit_item[i].SetQuantity(number);
-            return success;
+            return SUCCESS;
         }
     }
     if(fruit_item[i].GetName_() != name)
     {
-        return find_error;
+        return FIND_ERROR;
     }
 }
 
@@ -279,12 +286,12 @@ int change_Vegetable(std::vector<Commodity_Vegetables> &vegetables_item,std::str
         {
             vegetables_item[i].SetPrice_(price);
             vegetables_item[i].SetQuantity(number);
-            return success;
+            return SUCCESS;
         }
     }
     if(vegetables_item[i].GetName_() != name)
     {
-        return find_error;
+        return FIND_ERROR;
     }
 }
 
@@ -299,12 +306,12 @@ int change_Furniture(std::vector<Commodity_Furniture> &furniture_item,std::strin
         {
             furniture_item[i].SetPrice_(price);
             furniture_item[i].SetQuantity(number);
-            return success;
+            return SUCCESS;
         }
     }
     if(furniture_item[i].GetName_() != name)
     {
-        return find_error;
+        return FIND_ERROR;
     }
 }
 
@@ -319,12 +326,12 @@ int change_Clothes(std::vector<Commodity_Clothes> &clothes_item,std::string name
         {
             clothes_item[i].SetPrice_(price);
             clothes_item[i].SetQuantity(number);
-            return success;
+            return SUCCESS;
         }
     }
     if(clothes_item[i].GetName_() != name)
     {
-        return find_error;
+        return FIND_ERROR;
     }
 }
 
@@ -336,32 +343,32 @@ int change_Commodity(std::vector<Commodity_Fruit> &fruit_item,
     int input_type,price,number,input_go_on;
     std::string name;
     int return_value;
-    while(dead_cycle)
+    while(DEAD_CYCLE)
     {
         std::cin >> input_type >> name >> price >> number;
-        if(input_type == fruit_type)
+        if(input_type == FRUIT_TYPE)
             return_value = change_Fruit(fruit_item,name,price,number);
-        else if(input_type == vegetables_type)
+        else if(input_type == VEGETABLES_TYPE)
             return_value = change_Vegetable(vegetables_item,name,price,number);
-        else if(input_type == furniture_type)
+        else if(input_type == FURNITURE_TYPE)
             return_value = change_Furniture(furniture_item,name,price,number);
-        else if(input_type == clothes_type)
+        else if(input_type == CLOTHES_TYPE)
             return_value = change_Clothes(clothes_item,name,price,number);
         else
             error_In();
-        if(return_value == find_error)
+        if(return_value == FIND_ERROR)
         {
-            std::cout << "没找到你所需要的商品,是否继续?" << std::endl;
+            std_cout("没找到,是否继续");
             std::cin >> input_go_on;
-            if(input_go_on == don_t_continue)
-                return don_t_continue;
+            if(input_go_on == DON_T_CONTINUE)
+                return DON_T_CONTINUE;
         }
         else
         {
-            std::cout << "是否继续?" << std::endl;
+            std_cout("是否继续");
             std::cin >> input_go_on;
-            if(input_go_on == don_t_continue)
-                return don_t_continue;
+            if(input_go_on == DON_T_CONTINUE)
+                return DON_T_CONTINUE;
         }
     }
 }
@@ -372,14 +379,14 @@ int increase_Or_Delete()
     int user_input_flag;
     
     std::cin >> user_input_flag;
-    if(user_input_flag == increase_commodity)
-        return increase_commodity;
-    else if(user_input_flag == delete_commodity)
-        return delete_commodity;
+    if(user_input_flag == INCREASE_COMMODITY)
+        return INCREASE_COMMODITY;
+    else if(user_input_flag == DELETE_COMMODITY)
+        return DELETE_COMMODITY;
     
     else
         error_In();
-        return sign_out;
+        return SIGN_OUT;
     
 }
 
@@ -389,17 +396,17 @@ int Business(   std::vector<Commodity_Fruit> &fruit_item,
                 std::vector<Commodity_Furniture> &furniture_item,
                 std::vector<Commodity_Clothes> &clothes_item)
 {
-    while(dead_cycle)
+    while(DEAD_CYCLE)
     {
-        std::cout << "选做要做的操作,1增加,2删除,3更改" << std::endl;
+        std_cout("输入:1,增加;2,删除;3,更改");
         int user_input_flag = increase_Or_Delete();
-        if(user_input_flag == increase_commodity)
+        if(user_input_flag == INCREASE_COMMODITY)
             insert_Item(fruit_item,vegetables_item,furniture_item,clothes_item);
-        if(user_input_flag == delete_commodity)
+        if(user_input_flag == DELETE_COMMODITY)
             delete_Choice(fruit_item,vegetables_item,furniture_item,clothes_item);
-        if(user_input_flag == change_commodity)
+        if(user_input_flag == CHANGE_COMMODITY)
             change_Commodity(fruit_item,vegetables_item,furniture_item,clothes_item);
-        if(user_input_flag == sign_out)
-            return sign_out;
+        if(user_input_flag == SIGN_OUT)
+            return SIGN_OUT;
     }
 }

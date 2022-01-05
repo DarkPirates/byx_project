@@ -4,11 +4,10 @@
 #include "shopping.h"
 #include <vector>
 
-static const int dead_cycle           =   1;
-static const int seller_return        =   1;
-static const int user_return          =   2;
-static const int don_t_go_on          =   0;
-
+const static int DON_T_GO_TO          =   0;
+const static int DEAD_CYCLE           =   1;
+const static int SELLER_RETURN        =   1;
+const static int USER_RETURN          =   2;
 
 //获取键盘输入决定是否继续
 int go_On()
@@ -36,14 +35,14 @@ int main()
     
     int return_value;
 
-    while(dead_cycle)
+    while(DEAD_CYCLE)
     {
         int sign_in_return = sign_In(user_sign,seller_sign);
-        if(sign_in_return == user_return)
+        if(sign_in_return == USER_RETURN)
         {
             return_value = Shopping(fruit_item,vegetables_item,furniture_item,clothes_item,shoppint_cart_);
         }
-        else if(sign_in_return == seller_return)
+        else if(sign_in_return == SELLER_RETURN)
         {
             return_value = Business(fruit_item,vegetables_item,furniture_item,clothes_item);
         }
