@@ -34,7 +34,7 @@ def registerAccounts():
     user_name = obtainInput()                                                                  
     user_password = obtainInput()                  
     account_information[user_name] = user_password
-    user_account_json = json.dumps(account_information)                  #这里是将用户的输入存入刚刚取出的字典中
+    user_account_json = json.dumps(account_information)                     #这里是将用户的输入存入刚刚取出的字典中
     fileUser = open('./用户数据','r+')                                       #这一行打开这个文件,并给予读写权限
     fileUser.seek(0)                                                        #移动光标到首字节,以便覆盖掉以前的,防止有多个字典,然后读取出错
     fileUser.write(user_account_json)                                       #写入文件中
@@ -69,7 +69,7 @@ def signIn():
 
 
 #管理员登陆,因为管理员权限比较大,所以登陆检查应该更严格,图书馆的管理员一个应该就够了
-del administratorsSign()
+def administratorsSign():
     myPrint("输入帐号和密码")
     input_user_name = obtainInput()
     input_user_password = obtainInput()
@@ -82,59 +82,8 @@ del administratorsSign()
     else:
         return LOGIN_SUCCESS
 
-
-a = signIn()
+a = administratorsSign()
 myPrint(a)
 
 
-
-'''
-
-#!/usr/bin/python3
-#-*-UTF-8-*-
-
-import json
-
-#这是我自己的输入函数
-def obtainInput():
-    return input()
-
-#这是我自己的输出函数
-def myPrint(output_information):
-    print(output_information)
-
-#这是一个将帐号密码取出来的函数
-def takeOutAccount():
-    fileUser = open('./用户数据','w')                                       #这一行打开这个文件,并给予读权限
-    file_read = fileUser.read()                                            #file_read是表示读取出来的数据,此时是json类型
-    json_read_dictionaries = json.loads(file_read)                          #这一行是将读取出来的json类型转换成字典
-    myPrint(json_read_dictionaries)
-    fileUser.close()                                                        #用了要关上,没啥好说的
-    return json_read_dictionaries
-    
-#这是注册函数
-def registerAccounts():
-    storage_account = takeOutAccount()
-    myPrint("输入帐号,密码,用回车隔开")                                        #这里三行是对帐号注册时的名字与密码输入问题    
-    user_name = obtainInput()                                                                  
-    user_password = obtainInput()                  
-    json_read_dictionaries[user_name] = user_password
-    user_account_json = json.dumps(json_read_dictionaries)                  #这里是将用户的输入存入刚刚取出的字典中
-    fileUser = open('./用户数据','r+')
-    fileUser.seek(0)                                                        #移动光标到首字节,以便覆盖掉以前的,防止有多个字典,然后读取出错
-    fileUser.write(user_account_json)                                       #写入文件中
-    fileUser.close()                                                        #最后不要忘了关闭这个文件
-    
-#这是登陆模块
-def signIn():
-    input_user_name = obtainInput()
-    input_user_password = obtainInput()
-    storage_account = takeOutAccount()
-
-    #if input_user_name not in 
-
-#def longinChoice():    
-
-registerAccounts()
-'''
 

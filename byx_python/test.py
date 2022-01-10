@@ -84,7 +84,7 @@ print('We are the {} who say "{}!"'.format('knights', 'Ni'))
 
 
 
-
+'''
 
 for x in range(1, 11):
     print(repr(x).rjust(2), repr(x*x).rjust(3), end=' ')
@@ -92,5 +92,6 @@ for x in range(1, 11):
     print(repr(x*x*x).rjust(4))
 
 
-
-
+'''
+a = "23"
+print(int(a))

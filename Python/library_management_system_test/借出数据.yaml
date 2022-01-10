@@ -1,0 +1,9 @@
+- !!python/object:class_.TeachingAidsBook
+  _TeachingAidsBook__subject: math
+  book_name: highmath
+  book_number: '10011'
+  leave_time: 1641806393
+  mark: TeachingAidsBook
+  return_time: 0
+  root_change:
+  - {name: byx, time: -1641806393}
