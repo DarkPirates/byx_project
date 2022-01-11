@@ -35,6 +35,9 @@ class Book:
 
     def setBookName(self,book_name):
         self.book_name = book_name
+
+    def setMartk(self,mark):
+        self.mark = mark
         
     def setLeaveTime(self,leave_time):
         self.leave_time = leave_time

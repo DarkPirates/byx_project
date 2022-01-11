@@ -9,6 +9,7 @@ import time
 
 LOOP = 0
 NULL = 0
+EMPTYSCHOOLBAG = 0
 
 #遍历列表
 def ergodicFile():
@@ -72,6 +73,9 @@ def liquidationBook(book_number,conclusion):
 def borrowBook():
     book_bag = []
     while True:
+        if len(book_bag) > 5:
+            print('已经达到上限,自动退出选书环节')
+            retrurn book_bag
         print('输入你要看得类别')
         ergodicFileType(input())
         print('输入你要操作书的编号')
@@ -84,6 +88,44 @@ def borrowBook():
         print('是否退出借书环节')
         if input() == '是':
             return book_bag
+
+#对备选清单进行结算
+def clearBookBag(book_bag):
+    list_book_information = readBorrow()
+    print('输入你的名字')
+    name = input()
+    i = LOOP
+    while i < len(book_bag):
+        book_bag[i].setRootChange(name)                        #设置图书借的人的信息
+        list_book_information.append(book_bag[i])
+        book_bag.remove(book_bag[i])
+
+#对书包进行管理遍历
+def bookBagErgodic(book_bag):
+    i = LOOP
+    while i < len(book_bag):
+        print(book_bag[i].getgetBookNumber(), book_bag[i].getBookName())
+        i += 1
+
+#对备选书籍(书包)进行管理
+def bookBag(book_bag):
+    while True:
+        bookBagErgodic(book_bag)
+        list_book_information = readBorrow()
+        print('结算?还是删除')
+        if input() == '结算':
+            clearBookBag(book_bag)
+        else:
+            print('输入你要删除的书的编号')
+            inputBookNumber = input()
+            i = LOOP
+            while i < len(book_bag):
+                if book_bag[i].getBookNumber() == inputBookNumber:
+                    book_bag.remove(book_bag[i])
+                i += 1
+        if len(book_bag) == EMPTYSCHOOLBAG:
+            print('书包为空')
+            return EMPTYSCHOOLBAG
 
 #g归还遍历
 def giveBackErgodic(book_number):
