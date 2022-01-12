@@ -72,15 +72,17 @@ def signIn():
 def administratorsSign():
     myPrint("输入帐号和密码")
     input_user_name = obtainInput()
-    input_user_password = obtainInput()
-    if input_user_name != "baiyixin":
-        myPrint("帐号错误")
-        return LOGIN_ERROR
-    elif input_user_password != "helloword":
-        myPrint("密码错误")
-        return LOGIN_ERROR
-    else:
-        return LOGIN_SUCCESS
+    while True:
+        input_user_password = obtainInput()
+        if input_user_name != "baiyixin":
+            myPrint("帐号错误")
+            return LOGIN_ERROR
+        elif input_user_password != "helloword":
+            myPrint("密码错误,是否继续")
+            if obtainInput() != '继续':
+                return LOGIN_ERROR
+        else:
+            return LOGIN_SUCCESS
 
 a = administratorsSign()
 myPrint(a)

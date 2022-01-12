@@ -1,18 +1,9 @@
-- !!python/object:class_.NovelBook
-  _NovelBook__novel_type: happy
-  book_name: happy
-  book_number: '10100'
-  leave_time: 1641803376
-  mark: NovelBook
-  return_time: 1641806217
-  root_change:
-  - {name: byx, time: -1641803376}
-- !!python/object:class_.ScienceBook
-  _ScienceBook__research_direction: HO
-  book_name: Chemistry
-  book_number: '10086'
-  leave_time: 1641802716
-  mark: ScienceBook
-  return_time: 1641806245
-  root_change:
-  - {name: byx, time: -1641802716}
+- !!python/object:class_.TeachingAidsBook
+  _TeachingAidsBook__subject: math
+  book_name: highmath
+  book_number: ['10010', '10011', '10086', '1008611']
+  book_stock: 4
+  leave_time: 0
+  mark: TeachingAidsBook
+  return_time: 0
+  root_change: []

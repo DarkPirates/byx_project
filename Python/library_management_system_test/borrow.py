@@ -75,7 +75,7 @@ def borrowBook():
     while True:
         if len(book_bag) > 5:
             print('已经达到上限,自动退出选书环节')
-            retrurn book_bag
+            return book_bag
         print('输入你要看得类别')
         ergodicFileType(input())
         print('输入你要操作书的编号')
@@ -156,4 +156,4 @@ def giveBack():
 def test():
     pass
 
-borrowBook()
+giveBack()
