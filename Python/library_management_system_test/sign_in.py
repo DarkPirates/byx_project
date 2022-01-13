@@ -29,7 +29,6 @@ def takeOutAccount():
 #这是注册函数
 def registerAccounts():
     account_information =  takeOutAccount()
-    
     myPrint("输入帐号,密码,用回车隔开")                                        #这里三行是对帐号注册时的名字与密码输入问题    
     user_name = obtainInput()                                                                  
     user_password = obtainInput()                  

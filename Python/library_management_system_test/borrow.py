@@ -10,7 +10,7 @@ import time
 LOOP = 0
 NULL = 0
 EMPTYSCHOOLBAG = 0
-
+DEFAULTTIME = 0
 #遍历列表
 def ergodicFile():
     list_book_information = administrators.readFile()
@@ -43,6 +43,47 @@ def readBorrow():
     with open('./借出数据.yaml', 'r',encoding='UTF-8') as read:
         list_book_information = yaml.load(read)
         return list_book_information
+
+#结算,如果条件是结算应该怎么做
+def liquidationABook(list_book_information[i],a_book_number):
+    borrow_information =  readBorrow()
+    borrow_number = len(borrow_information)
+    if borrow_number == NULL:
+        list_book_information[i].getBookNumber().clear()
+        list_book_information[i].getBookNumber().append(a_book_number)
+        writeBorrow(list_book_information[i])
+        print("结算成功")
+        return
+    while borrow_number:
+        if borrow_information[borrow_number - 1].getBookMark() == list_book_information[i].getBookMark():
+            if borrow_information[borrow_number - 1].getBookName() == list_book_information[i].getBookName():         #这是找到了输入的书本编号
+                list_book_information[i].setLeaveTime(int(time.time()))                                                 #设置图书离馆时间
+                print('输入你的名字')         
+                name = input()      
+                list_book_information[i].setRootChange(a_book_number, name, setLeaveTime, DEFAULTTIME)                        #设置图书借的人的信息
+                borrow_information[borrow_number - 1].append(a_book_number)
+                list_book_information[i].getBookNumber().remove(a_book_number)
+                writeBorrow(borrow_information)
+                return list_book_information[i]
+
+#对借的书籍进行管理,存入备选或者从图书馆取出.
+def borrowOrReturn(book_name, a_book_number, mark, condition, book_bag):
+    list_book_information = administrators.readFile()                           #这是读取图书馆的书本
+    i = LOOP                                                                    #这个I是用来循环的,找到要操作的具体书本
+    while i:
+        if list_book_information[i].getMark() == mark:
+            if list_book_information[i].getBookName() == book_name:
+                findNumber = list_book_information[i].getBookNumber()
+                operation_number = len(findNumber)
+                while operation_number:
+                    if findNumber[operation_number - 1] == book_number:
+                        if condition == "结算":
+                            list_book_information[i] = liquidationABook()
+                            administrators.readFile(list_book_information)
+                            return book_bag
+                        elif condition == "加入备选":
+                            book_bag.append(list_book_information[i])
+                            return book_bag
 
 #结算
 def liquidationBook(book_number,conclusion):    
@@ -127,7 +168,7 @@ def bookBag(book_bag):
             print('书包为空')
             return EMPTYSCHOOLBAG
 
-#g归还遍历
+#归还遍历
 def giveBackErgodic(book_number):
     list_book_information = readBorrow()
     i = LOOP

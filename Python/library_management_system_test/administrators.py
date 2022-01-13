@@ -14,16 +14,8 @@ import yaml
 
 from class_ import Book
 
-from class_ import TeachingAidsBook
 
-from class_ import ScienceBook
-
-from class_ import PopularScienceBook
-
-from class_ import NovelBook
-
-from class_ import LifeBook
-
+NO_FIND = -1
 INPUTERROR = -1
 LOOP = 0
 TIME_INIT = 0
@@ -54,8 +46,11 @@ def checkBook(book_name, a_book_number):
             check_number = len(book_number)
             while check_number:
                 if book_number[check_number - 1] == a_book_number:
-                    print("已经存在该编号")
-                    return EXISTENCE
+                    print("已经存在该编号, 忽略还是继续")
+                    if input() == '继续':
+                        return check_number
+                    else:
+                        return EXISTENCE
                 check_number -= 1
         check_book -= 1
 
@@ -68,6 +63,7 @@ def inputBookInformation():
     leave_time = TIME_INIT
     return_time = TIME_INIT
     book_number = []
+    root_change = []
     while True:
         print("输入书籍编号, # 为停止")
         in_book_number = input()
@@ -82,8 +78,8 @@ def inputBookInformation():
         book_number.append(in_book_number)
     print("输入书本所属类别")
     mark = input()
-    print(private_parameter, book_name, leave_time, return_time, book_number, mark)
-    new_book = TeachingAidsBook(private_parameter, book_name, leave_time, return_time, book_number, mark)
+    print(book_name, leave_time, return_time, book_number, mark, root_change)
+    new_book = Book(book_name, leave_time, return_time, book_number, mark, root_change)
     return new_book
 
 #读取文件
@@ -165,12 +161,50 @@ def addBook():
                         continue
                     else:
                         list_book_information[i].getBookNumber().append(a_book_number)
+                        list_book_information[i].book_stock = len(list_book_information[i].getBookNumber())
         i += 1
     if i == len(list_book_information):
-        print("没找到你要增加的=-=")
+        print("没找到=-=")
+        return 
 
 #减少书本
 def deleteBook():
-    
+    while True:
+        list_book_information = readFile()
+        print("输入你要删除的书名和编号, # 表示结束")
+        book_name = input()
+        if book_name == '#':
+            break:
+        a_book_number = input()
+        subscript = checkBook(book_name,a_book_number)
+        if subscript == NO_FIND:
+            print("没找到")
+            continue
+        else:
+            list_book_information[i].getBookNumber().remove(a_book_number)
+            list_book_information[i].book_stock = len(list_book_information[i].getBookNumber())
+
+#更改书本
+def changeBook():
+    while True:
+        list_book_information = readFile()
+        print("输入你要更改的书名和编号, # 表示结束")
+        book_name = input()
+        if book_name == '#':
+            break:
+        a_book_number = input()
+        print("输入新的编号和书名")
+        new_book_name = input()
+        new_a_book_number = input()
+        subscript = checkBook(book_name,a_book_number)
+        if subscript == NO_FIND:
+            print("没找到")
+            continue
+        else:
+            list_book_information[i].setBookName(new_book_name)
+            list_book_information[i].getBookNumber().remove(a_book_number)
+            list_book_information[i].getBookNumber().append(new_a_book_number)
+            list_book_information[i].book_stock = len(list_book_information[i].getBookNumber())
+        
 
 addBook()

@@ -1,9 +1,1 @@
-- !!python/object:class_.TeachingAidsBook
-  _TeachingAidsBook__subject: math
-  book_name: highmath
-  book_number: ['10010', '10011', '10086', '1008611']
-  book_stock: 4
-  leave_time: 0
-  mark: TeachingAidsBook
-  return_time: 0
-  root_change: []
+[]
