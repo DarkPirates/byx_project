@@ -27,6 +27,11 @@ POPULAR = 3
 NOVEL = 4
 LIFE = 5
 
+##
+# @brief 用来取出图书馆内存的书籍
+# 
+# @retval 返回的是取出的书本 file_read<list>
+##
 def takeOutBOOK():
     fileUser = open('./书籍数据','rb+')                                       #这一行打开这个文件,并给予读权限
     file_read = pickle.load(fileUser)                                       #file_read是表示读取出来的数据,此时是列表 
@@ -34,7 +39,14 @@ def takeOutBOOK():
     fileUser.close()                                                        #用了要关上,没啥好说的
     return file_read
 
-#查找该编号书籍在不在列表中
+##
+# @brief 查找该编号书籍在不在列表中
+# 
+# @param book_name<str> 书本名
+# @param a_book_number<str> 一个书本编号
+# 
+# @retval EXISTENCE 返回已存在该书
+##
 def checkBook(book_name, a_book_number):
     print(book_name)
     list_book_information = readFile()
@@ -54,7 +66,11 @@ def checkBook(book_name, a_book_number):
                 check_number -= 1
         check_book -= 1
 
-#对书籍信息进行输入
+##
+# @brief 对书籍信息进行输入
+#
+# @retval new_book 将添加好的书本返回
+##
 def inputBookInformation():
     new_book = NONE
     print("输入私有属性,书名")
@@ -82,18 +98,28 @@ def inputBookInformation():
     new_book = Book(book_name, leave_time, return_time, book_number, mark, root_change)
     return new_book
 
-#读取文件
+##
+# @brief 读取文件
+#
+# @retval 返回读取到的文件
+##
 def readFile():
     with open('./书籍数据.yaml', 'r',encoding='UTF-8') as read:
         list_book_information = yaml.load(read)
         return list_book_information
 
-#写入文件
+##
+# @brief 写入文件
+##
 def writeFile(list_book_information):
     with open('./书籍数据.yaml', 'w',encoding='UTF-8') as file:
         yaml.dump(list_book_information, file, encoding='UTF-8', allow_unicode='True')
 
-#遍历列表
+##
+# @brief 遍历列表
+#
+# @param list_book_information<list> 这是书本的列表
+##
 def ergodicFile(list_book_information):
     #while循环遍历列表, i是用来满足遍历的条件
     i = LOOP
@@ -101,7 +127,9 @@ def ergodicFile(list_book_information):
         print(list_book_information[i].getBookMark(), list_book_information[i].getBookName())
         i += 1
 
-#增加书籍
+##
+# @ brief 增加书籍
+##
 def addBookType():
     print("输入你要加入的书籍")
     book_information = inputBookInformation()
@@ -110,7 +138,9 @@ def addBookType():
     list_book_information.append(book_information)
     writeFile(list_book_information)
 
-#减少书籍
+##
+# @brief 减少书籍
+##
 def deleteBookType():
     list_book_information = readFile()
     ergodicFile(list_book_information)
@@ -123,7 +153,9 @@ def deleteBookType():
         i += 1
     writeFile(list_book_information)
 
-#更改书籍信息
+##
+# @brief 更改书籍信息
+##
 def changeBookType():
     list_book_information = readFile()
     ergodicFile(list_book_information)
@@ -139,7 +171,9 @@ def changeBookType():
         i += 1
     writeFile(list_book_information)
 
-#增加书本
+##
+# @brief 增加书本
+##
 def addBook():
     list_book_information = readFile()
     ergodicFile()
@@ -167,7 +201,9 @@ def addBook():
         print("没找到=-=")
         return 
 
-#减少书本
+##
+# @brief 减少书本
+##
 def deleteBook():
     while True:
         list_book_information = readFile()
@@ -184,7 +220,9 @@ def deleteBook():
             list_book_information[i].getBookNumber().remove(a_book_number)
             list_book_information[i].book_stock = len(list_book_information[i].getBookNumber())
 
-#更改书本
+##
+# @brief 更改书本
+##
 def changeBook():
     while True:
         list_book_information = readFile()
