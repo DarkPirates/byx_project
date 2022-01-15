@@ -7,6 +7,10 @@ import yaml
 
 import time
 
+import copy
+
+from book import Book
+
 LOOP = 0
 NULL = 0
 EMPTYSCHOOLBAG = 0
@@ -65,26 +69,35 @@ def readBorrow():
 #
 # @revalue list_book_information[i] 返回一个Book类型,将要借出的那本书的编号去除之后,应该将此书返回回来
 ##
-def liquidationABook(list_book_information[i],a_book_number):
-    borrow_information =  readBorrow()
+def liquidationABook(a_book,a_book_number):
+    print(type(a_book))
+    borrow_information = readBorrow()
     borrow_number = len(borrow_information)
     if borrow_number == NULL:
-        list_book_information[i].getBookNumber().clear()                                                              
-        list_book_information[i].getBookNumber().append(a_book_number)
-        writeBorrow(list_book_information[i])
+        a_book.getBookNumber().remove(a_book_number)
+        a_book_flag = copy.deepcopy(a_book)
+        print(type(a_book_flag))
+        a_book.getBookNumber().clear()                                                              
+        a_book.getBookNumber().append(a_book_number)
+        a_book_flag.setLeaveTime(int(time.time()))                                                 #设置图书离馆时间
+        print('输入你的名字')         
+        name = input()      
+        a_book_flag.setRootChange(a_book_number, name, int(time.time()), DEFAULTTIME)                        #设置图书借的人的信息
+        writeBorrow(a_book)
         print("结算成功")
-        return
+        return a_book_flag
     while borrow_number:
-        if borrow_information[borrow_number - 1].getBookMark() == list_book_information[i].getBookMark():
-            if borrow_information[borrow_number - 1].getBookName() == list_book_information[i].getBookName():         #这是找到了输入的书本编号
-                list_book_information[i].setLeaveTime(int(time.time()))                                                 #设置图书离馆时间
+        print("while")
+        if borrow_information[borrow_number - 1].getBookMark() == a_book.getBookMark():
+            if borrow_information[borrow_number - 1].getBookName() == a_book.getBookName():         #这是找到了输入的书本编号
+                a_book.setLeaveTime(int(time.time()))                                                 #设置图书离馆时间
                 print('输入你的名字')         
                 name = input()      
-                list_book_information[i].setRootChange(a_book_number, name, setLeaveTime, DEFAULTTIME)                        #设置图书借的人的信息
+                a_book.setRootChange(a_book_number, name, setLeaveTime, DEFAULTTIME)                        #设置图书借的人的信息
                 borrow_information[borrow_number - 1].append(a_book_number)
-                list_book_information[i].getBookNumber().remove(a_book_number)
+                a_book.getBookNumber().remove(a_book_number)
                 writeBorrow(borrow_information)
-                return list_book_information[i]
+                return a_book
 
 ##
 # @brief 对借的书籍进行管理,存入备选或者从图书馆取出.
@@ -97,27 +110,30 @@ def liquidationABook(list_book_information[i],a_book_number):
 ##
 def borrowBookStep(book_name, a_book_number, mark, condition, book_bag):
     list_book_information = administrators.readFile()                           #这是读取图书馆的书本
-    i = LOOP                                                                    #这个I是用来循环的,找到要操作的具体书本
+    i = len(list_book_information)                                                                    #这个I是用来循环的,找到要操作的具体书本
     while i:
-        if list_book_information[i].getMark() == mark:                          #根据类别进行筛选
-            if list_book_information[i].getBookName() == book_name:             #根据书名进行筛选
-                findNumber = list_book_information[i].getBookNumber()           #将书本编号列表提取出来
+        if list_book_information[i - 1].getMark() == mark:                          #根据类别进行筛选
+            if list_book_information[i - 1].getBookName() == book_name:             #根据书名进行筛选
+                print(book_name)
+                findNumber = list_book_information[i - 1].getBookNumber()           #将书本编号列表提取出来
                 operation_number = len(findNumber)      
                 while operation_number:                                 
-                    if findNumber[operation_number - 1] == book_number:         #找到该编号的书本
+                    if findNumber[operation_number - 1] == a_book_number:         #找到该编号的书本
                         if condition == "结算":
-                            list_book_information[i] = liquidationABook()       #对该书本进行结算
+                            list_book_information[i - 1] = liquidationABook(list_book_information[i - 1], a_book_number)       #对该书本进行结算
+                            print(list_book_information[i - 1].getBookNumber())
                             administrators.writeFile(list_book_information)
                             return book_bag
                         elif condition == "加入":
-                            book_bag.append(list_book_information[i])           #加入备选的话,应该只加入选到的编号书本,其他的就不应该参杂进去所以这里应该再筛选一次
-                            list_book_information[i].getBookNumber().clear()    #先清空列表
-                            list_book_information[i].getBookNumber().append(findNumber[operation_number - 1]) #将要加入备选的书的编号加入这个即将加入借出书籍的list
-                            writeBorrow(list_book_information[i])               #现在这个里面便只剩下了findnumber中需要的那个编号
+                            book_bag.append(list_book_information[i - 1])           #加入备选的话,应该只加入选到的编号书本,其他的就不应该参杂进去所以这里应该再筛选一次
+                            list_book_information[i - 1].getBookNumber().clear()    #先清空列表
+                            list_book_information[i - 1].getBookNumber().append(findNumber[operation_number - 1]) #将要加入备选的书的编号加入这个即将加入借出书籍的list
+                            writeBorrow(list_book_information[i - 1])               #现在这个里面便只剩下了findnumber中需要的那个编号
                             return book_bag    
                         else:
-                            return book_bag                     
-        i += 1                                  
+                            return book_bag
+                    operation_number -= 1                     
+        i -= 1                                  
                             
 '''
 
@@ -286,4 +302,4 @@ def seeAllQuery():
 def test():
     pass
 
-giveBack()
+borrowBook()

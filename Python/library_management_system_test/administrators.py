@@ -12,7 +12,7 @@ import time
 
 import yaml
 
-from class_ import Book
+from book import Book
 
 
 NO_FIND = -1
@@ -45,12 +45,13 @@ def takeOutBOOK():
 # @param book_name<str> 书本名
 # @param a_book_number<str> 一个书本编号
 # 
-# @retval EXISTENCE 返回已存在该书
+# @retval EXISTENCE 返回不存在该书
 ##
 def checkBook(book_name, a_book_number):
     print(book_name)
     list_book_information = readFile()
     check_book = len(list_book_information)
+    return_value_book = []
     while check_book:
         if list_book_information[check_book - 1].getBookName() == book_name:
             print(list_book_information[check_book - 1].getBookName())
@@ -58,13 +59,16 @@ def checkBook(book_name, a_book_number):
             check_number = len(book_number)
             while check_number:
                 if book_number[check_number - 1] == a_book_number:
+                    return_value_book.append(check_book - 1)
+                    return_value_book.append(check_number - 1)
                     print("已经存在该编号, 忽略还是继续")
                     if input() == '继续':
-                        return check_number
+                        return return_value_book
                     else:
                         return EXISTENCE
                 check_number -= 1
         check_book -= 1
+    return NO_FIND
 
 ##
 # @brief 对书籍信息进行输入
@@ -73,9 +77,12 @@ def checkBook(book_name, a_book_number):
 ##
 def inputBookInformation():
     new_book = NONE
-    print("输入私有属性,书名")
-    private_parameter = input()
+    print("输入书名")
     book_name = input()
+    list_book_information = readFile()
+    if book_name in list_book_information:
+        print("已经存在该书,请移步去添加书本")
+        return
     leave_time = TIME_INIT
     return_time = TIME_INIT
     book_number = []
@@ -124,7 +131,7 @@ def ergodicFile(list_book_information):
     #while循环遍历列表, i是用来满足遍历的条件
     i = LOOP
     while i < len(list_book_information):
-        print(list_book_information[i].getBookMark(), list_book_information[i].getBookName())
+        print(list_book_information[i].getMark(), list_book_information[i].getBookName())
         i += 1
 
 ##
@@ -146,11 +153,11 @@ def deleteBookType():
     ergodicFile(list_book_information)
     print('输入你要删除的书籍类别')
     inputBookMark = input()
-    i = LOOP
-    while i < len(list_book_information):
-        if list_book_information[i].getMark() == inputBookMark:
-            list_book_information.remove(list_book_information[i])
-        i += 1
+    i = len(list_book_information)
+    while i:
+        if list_book_information[i - 1].getMark() == inputBookMark:
+            list_book_information.remove(list_book_information[i - 1])
+        i -= 1
     writeFile(list_book_information)
 
 ##
@@ -176,14 +183,14 @@ def changeBookType():
 ##
 def addBook():
     list_book_information = readFile()
-    ergodicFile()
+    ergodicFile(list_book_information)
     print("输入要增加的书本名, 以及书本类型")
     book_name = input()
     book_mark = input()
     i = NONE
     while i < len(list_book_information):
         if list_book_information[i].getBookName() == book_name:
-            if list_book_information[i].getBookMark() == book_mark:
+            if list_book_information[i].getMark() == book_mark:
                 while True:
                     print("输入增加书本的书本编号, # 表示输入完毕")
                     a_book_number = input()
@@ -197,6 +204,7 @@ def addBook():
                         list_book_information[i].getBookNumber().append(a_book_number)
                         list_book_information[i].book_stock = len(list_book_information[i].getBookNumber())
         i += 1
+    writeFile(list_book_information)
     if i == len(list_book_information):
         print("没找到=-=")
         return 
@@ -210,15 +218,18 @@ def deleteBook():
         print("输入你要删除的书名和编号, # 表示结束")
         book_name = input()
         if book_name == '#':
-            break:
+            break
         a_book_number = input()
         subscript = checkBook(book_name,a_book_number)
+        list_book = subscript[0]
+        list_book_number = subscript[1]
         if subscript == NO_FIND:
             print("没找到")
             continue
         else:
-            list_book_information[i].getBookNumber().remove(a_book_number)
-            list_book_information[i].book_stock = len(list_book_information[i].getBookNumber())
+            list_book_information_number = list_book_information[list_book].getBookNumber()
+            list_book_information_number.remove(list_book_information_number[list_book_number])
+            writeFile()
 
 ##
 # @brief 更改书本
@@ -229,7 +240,7 @@ def changeBook():
         print("输入你要更改的书名和编号, # 表示结束")
         book_name = input()
         if book_name == '#':
-            break:
+            break
         a_book_number = input()
         print("输入新的编号和书名")
         new_book_name = input()
@@ -239,10 +250,11 @@ def changeBook():
             print("没找到")
             continue
         else:
-            list_book_information[i].setBookName(new_book_name)
-            list_book_information[i].getBookNumber().remove(a_book_number)
-            list_book_information[i].getBookNumber().append(new_a_book_number)
-            list_book_information[i].book_stock = len(list_book_information[i].getBookNumber())
+            list_book_information[subscript[0]].setBookName(new_book_name)
+            list_book_information[subscript[0]].getBookNumber().remove(a_book_number)
+            list_book_information[subscript[0]].getBookNumber().append(new_a_book_number)
+            list_book_information[subscript[0]].book_stock = len(list_book_information[subscript[0]].getBookNumber())
+            writeFile(list_book_information)
         
 
-addBook()
+#changeBook()

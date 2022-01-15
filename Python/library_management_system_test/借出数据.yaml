@@ -1,1 +1,8 @@
-[]
+!!python/object:book.Book
+book_name: highmath
+book_number: ['11186']
+book_stock: 5
+leave_time: 0
+mark: math
+return_time: 0
+root_change: []
