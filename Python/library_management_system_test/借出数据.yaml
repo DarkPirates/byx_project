@@ -1,8 +1,18 @@
-!!python/object:book.Book
-book_name: highmath
-book_number: ['11186']
-book_stock: 5
-leave_time: 0
-mark: math
-return_time: 0
-root_change: []
+- !!python/object:book.Book
+  book_name: highmath
+  book_number: ['4']
+  book_stock: 1
+  leave_time: 0
+  mark: math
+  return_time: 0
+  root_change:
+  - '4': [byx, 0, 1642321996, 1642321996]
+- !!python/object:book.Book
+  book_name: highmath
+  book_number: ['3']
+  book_stock: 1
+  leave_time: 0
+  mark: math
+  return_time: 0
+  root_change:
+  - '3': [byx, 0, 1642381330, 1642381330]

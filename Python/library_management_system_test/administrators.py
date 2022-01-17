@@ -257,4 +257,4 @@ def changeBook():
             writeFile(list_book_information)
         
 
-#changeBook()
+#addBookType()
