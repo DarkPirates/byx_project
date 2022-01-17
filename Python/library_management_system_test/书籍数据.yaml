@@ -1,9 +1,41 @@
 - !!python/object:book.Book
   book_name: highmath
-  book_number: ['1', '2', '5']
-  book_stock: 3
+  book_number: ['1', '2', '5', '6', '7', '8', '9']
+  book_stock: 7
   leave_time: 0
   mark: math
   return_time: 0
   root_change:
   - '5': [byx, 0, 1642321925, 1642321925]
+- !!python/object:book.Book
+  book_name: english
+  book_number: ['1', '2', '3', '4', '5', '6', '7', '8', '9']
+  book_stock: 9
+  leave_time: 0
+  mark: Languages
+  return_time: 0
+  root_change: []
+- !!python/object:book.Book
+  book_name: Basketball
+  book_number: ['1', '2', '3', '4', '5', '6', '7', '8', '9']
+  book_stock: 9
+  leave_time: 0
+  mark: Sports
+  return_time: 0
+  root_change: []
+- !!python/object:book.Book
+  book_name: universe
+  book_number: ['1', '2', '3', '4', '5', '6', '7', '8', '9']
+  book_stock: 9
+  leave_time: 0
+  mark: science
+  return_time: 0
+  root_change: []
+- !!python/object:book.Book
+  book_name: H2O
+  book_number: ['1', '2', '3', '4', '56', '6', '7', '8', '9']
+  book_stock: 9
+  leave_time: 0
+  mark: Chemistry
+  return_time: 0
+  root_change: []

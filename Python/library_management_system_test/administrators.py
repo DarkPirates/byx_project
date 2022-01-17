@@ -203,6 +203,7 @@ def addBook():
                     else:
                         list_book_information[i].getBookNumber().append(a_book_number)
                         list_book_information[i].book_stock = len(list_book_information[i].getBookNumber())
+        list_book_information[i].book_stock = len(list_book_information[i].getBookNumber())
         i += 1
     writeFile(list_book_information)
     if i == len(list_book_information):
@@ -257,4 +258,4 @@ def changeBook():
             writeFile(list_book_information)
         
 
-#addBookType()
+addBookType()
