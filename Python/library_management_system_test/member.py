@@ -12,8 +12,9 @@ DEFAULTTIME = 0
 LOGIN_ERROR = -1
 LOGIN_OUT = 0
 GO_ON = 1
-LOGIN_SUCCESS = 1
+LOGIN_SUCCESS_STUDENT = 1
 NEED = 1
+LOGIN_SUCCESS_ROOT = 2
 
 class Member:
     ##
@@ -21,9 +22,8 @@ class Member:
     # @param account<str> 帐号,member成员应该有的成员变量
     # @param password<str> 密码,member成员中account帐号对应的密码
     ##
-    def __init__(self, account, password):
+    def __init__(self, account):
         self.account = account
-        self.password = password
     
     ##
     # @brief 登陆接口,但是呢,一般都用派生类自己的登陆接口,如果写了就是有空就写了,没写就是没时间来补充了
@@ -41,8 +41,8 @@ class User(Member):
     # @password<str> 输入的密码
     # @user_id<str> 这是学生私有的学号
     ##
-    def __init__(self, account, password, user_id):
-        Member.__init__(self, account,password)
+    def __init__(self, account, user_id):
+        Member.__init__(self, account)
         self._user_id = user_id
 
     ##
@@ -77,14 +77,16 @@ class User(Member):
                     return LOGIN_OUT
                 else:
                     self.setAccount(input())
-            elif storage_account[self.account] != self.password:
+            print("输入密码")
+            self.setPassword(input())
+            if storage_account[self.account] != self.password:
                 if set_pass_flag < 3:
                     set_pass_flag += 1
                     self.setPassword(input())
                 else:
                     return LOGIN_ERROR
             else:
-                return LOGIN_SUCCESS
+                return LOGIN_SUCCESS_STUDENT
 
     ##
     # @brief 这是注册函数
@@ -92,11 +94,20 @@ class User(Member):
     ##
     def registerAccounts(self):
         account_information = sign_in.takeOutAccount()
-        user_name = self.account            
-        if user_name in account_information:
-            sign_in.myPrint("已经有了该用户名")
-            return LOGIN_ERROR                                                  
-        user_password = self.password                  
+        user_name = self.account
+        while True:            
+            if user_name in account_information:
+                sign_in.myPrint("已经有了该用户名,是否重新来?")
+                user_input = input()
+                if user_input == 'no':
+                    return LOGIN_ERROR
+                else:
+                    print("重新输入你的帐号")
+                    user_name = self.setAccount(input())
+            else:
+                break
+        print("输入密码")
+        user_password = self.setPassword(input())                
         account_information[user_name] = user_password
         user_account_json = json.dumps(account_information)                     #这里是将用户的输入存入刚刚取出的字典中
         fileUser = open('./用户数据','r+')                                       #这一行打开这个文件,并给予读写权限
@@ -105,7 +116,7 @@ class User(Member):
         fileUser.close()                                                        #最后不要忘了关闭这个文件
 
 
-class administrators(Member):
+class administratorsClass(Member):
     
     ##
     # @brief 设置自己的密码,是指输入的密码
@@ -125,6 +136,9 @@ class administrators(Member):
         if root_account != 'root':
             return LOGIN_ERROR
         while True:
+            print("输入密码")
+            password = input()
+            self.setPassword(password)
             root_password = self.password
             if root_password != 'helloword':
                 sign_in.myPrint("密码错误,重新输入请输入 1 ,否则视为终止登陆")
@@ -134,11 +148,5 @@ class administrators(Member):
                 else:
                     self.setPassword(input())
             else:
-                return LOGIN_SUCCESS
+                return LOGIN_SUCCESS_ROOT
 
-
-def test_():
-    test_user = User(input(), input(), input())
-    test_user.loginIn()
-
-test_()

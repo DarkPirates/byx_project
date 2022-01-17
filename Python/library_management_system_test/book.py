@@ -138,6 +138,7 @@ class Book:
     ##
     def setRootChange(self, a_book_number, name, leave_time, return_time):
         user_borrow_time = self.getBorrowTIme()
+        print(name)
         user_borrow = [{a_book_number : [name, leave_time, return_time, return_time - leave_time]}]
         self.root_change.extend(user_borrow)
 

@@ -257,5 +257,3 @@ def changeBook():
             list_book_information[subscript[0]].book_stock = len(list_book_information[subscript[0]].getBookNumber())
             writeFile(list_book_information)
         
-
-addBookType()
