@@ -1,7 +1,7 @@
 - !!python/object:book.Book
   book_name: highmath
   book_number: ['1', '2', '5']
-  book_stock: 5
+  book_stock: 3
   leave_time: 0
   mark: math
   return_time: 0

@@ -134,6 +134,7 @@ def borrowBookStep(book_name, a_book_number, mark, condition, book_bag):
                         if condition == "结算":
                             list_book_information[i - 1] = liquidationABook(list_book_information[i - 1], a_book_number)       #对该书本进行结算
                             print(list_book_information[i - 1].getBookNumber())
+                            list_book_information[i - 1].book_stock = len(list_book_information[i - 1].getBookNumber()) 
                             administrators.writeFile(list_book_information)
                             return book_bag
                         elif condition == "加入":
@@ -143,6 +144,7 @@ def borrowBookStep(book_name, a_book_number, mark, condition, book_bag):
                                             list_book_information[i - 1].getRootChange())
                             book_bag.append(new_book)
                             list_book_information[i - 1].getBookNumber().remove(a_book_number)
+                            list_book_information[i - 1].book_stock = len(list_book_information[i - 1].getBookNumber())
                             administrators.writeFile(list_book_information)
                             return book_bag    
                         else:
@@ -290,7 +292,8 @@ def giveBackErgodic(book_number):
             if list_book_information[book_type_number - 1].getBookName() == this_book.getBookName():
                 list_book_information[book_type_number - 1].getBookNumber().extend(this_book.getBookNumber())
                 list_book_information[book_type_number - 1].getRootChange().extend(this_book.getRootChange())
-        book_type_number -= 1
+            list_book_information[i - 1].book_stock = len(list_book_information[i - 1].getBookNumber())
+        book_type_number -= 1   
     administrators.writeFile(list_book_information)
 
 ##       
