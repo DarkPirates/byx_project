@@ -166,15 +166,13 @@ def deleteBookType():
 def changeBookType():
     list_book_information = readFile()
     ergodicFile(list_book_information)
-    print('输入你要更改的书的编号, 按照私有属性, 名字, 编号, 类型, 来输入')
+    print('输入你要更改的书名')
     inputBookName = input()
     i = LOOP
     while i < len(list_book_information):
         if list_book_information[i].getBookName() == inputBookName:
-            list_book_information[i].setPrivate(input())
             list_book_information[i].setBookName(input())
-            list_book_information[i].setBookNumber(input())
-            list_book_information[i].setMartk()
+            list_book_information[i].setMartk(input())
         i += 1
     writeFile(list_book_information)
 
@@ -225,12 +223,12 @@ def deleteBook():
         list_book = subscript[0]
         list_book_number = subscript[1]
         if subscript == NO_FIND:
-            print("没找到")
+            #print("没找到")
             continue
         else:
             list_book_information_number = list_book_information[list_book].getBookNumber()
             list_book_information_number.remove(list_book_information_number[list_book_number])
-            writeFile()
+            writeFile(list_book_information)
 
 ##
 # @brief 更改书本
@@ -243,7 +241,7 @@ def changeBook():
         if book_name == '#':
             break
         a_book_number = input()
-        print("输入新的编号和书名")
+        print("输入新的书名和编号")
         new_book_name = input()
         new_a_book_number = input()
         subscript = checkBook(book_name,a_book_number)

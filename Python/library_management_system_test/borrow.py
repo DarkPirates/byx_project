@@ -98,26 +98,7 @@ def liquidationABook(a_book,a_book_number):
     writeBorrow(borrow_information)
     print("结算成功")
     return a_book_flag
-'''
-    else:
-        while borrow_number:
-            print("while")
-            if borrow_information[borrow_number - 1].getMark() == a_book.getMark():
-                if borrow_information[borrow_number - 1].getBookName() == a_book.getBookName():         #这是找到了输入的书本编号
-                    a_book.setLeaveTime(int(time.time()))                                                 #设置图书离馆时间
-                    print('输入你的名字')         
-                    name = input()      
-                    a_book.setRootChange(a_book_number, name, setLeaveTime, DEFAULTTIME)                        #设置图书借的人的信息
-                    borrow_information[borrow_number - 1].append(a_book_number)
-                    a_book.getBookNumber().remove(a_book_number)
-                    writeBorrow(borrow_information)
-                    return a_book
-            borrow_number -= 1
-        a_book.setLeaveTime(int(time.time()))
-        print('输入你的名字')
-        a_book.setRootChange(a_book_number, name, setLeaveTime, DEFAULTTIME)
-        borrow_information[borrow_number - 1].append(a_book_number)
-'''
+
         
 ##
 # @brief 对借的书籍进行管理,存入备选或者从图书馆取出.
@@ -181,7 +162,8 @@ def borrowBook():
         this_book = borrowBookStep(book_name, input_book_number, book_mark, conclusion, book_bag)
         print('是否退出借书环节')
         if input() == '是':
-            return book_bag
+            clearBookBag(book_bag)
+            return 
 
 ##
 # @brief 对备选清单进行结算
@@ -260,6 +242,7 @@ def giveBackErgodic(book_number):
         list_book_number = list_book_information[i].getBookNumber()
         if list_book_number[FRIST] == book_number:
             list_book_information[i].setReturnTime(int(time.time()))
+            list_book_information[i].setRootChange(book_number, list_book_information[i].getBookName(), list_book_information[i].getLeaveTime(), int(time.time()))
             print(list_book_information[i].getBookNumber())
             this_book = copy.deepcopy(list_book_information[i])
             print(this_book.getBookNumber())
@@ -298,18 +281,22 @@ def seeQuery():
         lib_information = list_book_infhormation[i].getRootChange()
         lib_information_number = len(lib_information)
         if lib_information_number != 0:
-            names = [v[0] for v in lib_information[lib_information_number - 1].values()]
-            if names[0] == acount:
-                print(lib_information[lib_information_number - 1].keys(), lib_information[lib_information_number - 1].values())
+            while lib_information_number:
+                names = [v[0] for v in lib_information[lib_information_number - 1].values()]
+                if names[0] == acount:
+                    print(lib_information[lib_information_number - 1].keys(), lib_information[lib_information_number - 1].values())
+                lib_information_number -= 1
         i += 1
     i = NULL
     while i < len(borrow_information):
         lib_information = borrow_information[i].getRootChange()
         lib_information_number = len(lib_information)
         if lib_information_number != 0:
-            names = [v[0] for v in lib_information[lib_information_number - 1].values()]
-            if names[0] == acount:
-                print(lib_information[lib_information_number - 1].keys(), lib_information[lib_information_number - 1].values())
+            while lib_information_number:
+                names = [v[0] for v in lib_information[lib_information_number - 1].values()]
+                if names[0] == acount:
+                    print(lib_information[lib_information_number - 1].keys(), lib_information[lib_information_number - 1].values())
+                lib_information_number -= 1
         i += 1
 
 '''

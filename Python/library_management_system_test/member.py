@@ -103,11 +103,13 @@ class User(Member):
                     return LOGIN_ERROR
                 else:
                     print("重新输入你的帐号")
-                    user_name = self.setAccount(input())
+                    self.setAccount(input())
+                    user_name = self.account
             else:
                 break
         print("输入密码")
-        user_password = self.setPassword(input())                
+        self.setPassword(input())
+        user_password = self.password                
         account_information[user_name] = user_password
         user_account_json = json.dumps(account_information)                     #这里是将用户的输入存入刚刚取出的字典中
         fileUser = open('./用户数据','r+')                                       #这一行打开这个文件,并给予读写权限
@@ -135,10 +137,10 @@ class administratorsClass(Member):
         root_account = self.account 
         if root_account != 'root':
             return LOGIN_ERROR
+        print("输入密码")
+        password = input()
+        self.setPassword(password)
         while True:
-            print("输入密码")
-            password = input()
-            self.setPassword(password)
             root_password = self.password
             if root_password != 'helloword':
                 sign_in.myPrint("密码错误,重新输入请输入 1 ,否则视为终止登陆")

@@ -28,7 +28,7 @@ def sign_Login():
         print("输入帐号, id")
         user_sign = User(input(), input())
         return_value = user_sign.registerAccounts()
-    print("是否需要登陆")
+    print("是否需要登陆(管理员 / 学生)")
     sign_flag = input()
     if sign_flag == '管理员':
         print("输入帐号密码")
@@ -56,9 +56,11 @@ def rootJurisdiction():
         elif root_input == '图书':
             print("你要怎么操作书?增删改书籍(书籍或者书本)?其他输入表示退出本层")
             while True:
+                print("当前在选择更改目录")
                 root_input = input()
                 if root_input == '书籍':
                     while True:
+                        print("当前在书籍类型目录")
                         root_input = input()
                         if root_input == '增加类型':
                             administrators.addBookType()
@@ -70,6 +72,7 @@ def rootJurisdiction():
                             break
                 elif root_input == '书本':
                     while True:
+                        print("当前在书本目录")
                         root_input = input()
                         if root_input == '增加书本':
                             administrators.addBook()
