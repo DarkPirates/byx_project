@@ -41,9 +41,8 @@ class User(Member):
     # @password<str> 输入的密码
     # @user_id<str> 这是学生私有的学号
     ##
-    def __init__(self, account, user_id):
+    def __init__(self, account):
         Member.__init__(self, account)
-        self._user_id = user_id
 
     ##
     # @brief 设置自己的密码,是指输入的密码
@@ -76,14 +75,22 @@ class User(Member):
                 if user_input != GO_ON:
                     return LOGIN_OUT
                 else:
+                    print("输入帐号")
                     self.setAccount(input())
-            print("输入密码")
-            self.setPassword(input())
+            else:
+                break
+        print("输入密码")
+        self.setPassword(input())
+        while True:
             if storage_account[self.account] != self.password:
                 if set_pass_flag < 3:
                     set_pass_flag += 1
+                    print("密码错误,重新输入密码,或者输入 # 退出,还有 ", 4 - set_pass_flag, "次机会")
                     self.setPassword(input())
+                    if self.password == '#':
+                        return LOGIN_OUT
                 else:
+                    print("输入错误 3 次了,程序结束")
                     return LOGIN_ERROR
             else:
                 return LOGIN_SUCCESS_STUDENT
@@ -97,25 +104,36 @@ class User(Member):
         user_name = self.account
         while True:            
             if user_name in account_information:
-                sign_in.myPrint("已经有了该用户名,是否重新来?")
+                sign_in.myPrint("已经有了该用户名,是否重新来?(输入 0 退出,其他任何输入为继续)")
                 user_input = input()
-                if user_input == 'no':
-                    return LOGIN_ERROR
+                if user_input == str(LOGIN_OUT):
+                    return LOGIN_OUT
                 else:
                     print("重新输入你的帐号")
                     self.setAccount(input())
                     user_name = self.account
             else:
                 break
-        print("输入密码")
-        self.setPassword(input())
-        user_password = self.password                
-        account_information[user_name] = user_password
-        user_account_json = json.dumps(account_information)                     #这里是将用户的输入存入刚刚取出的字典中
-        fileUser = open('./用户数据','r+')                                       #这一行打开这个文件,并给予读写权限
-        fileUser.seek(0)                                                        #移动光标到首字节,以便覆盖掉以前的,防止有多个字典,然后读取出错
-        fileUser.write(user_account_json)                                       #写入文件中
-        fileUser.close()                                                        #最后不要忘了关闭这个文件
+        while True:        
+            print("输入密码")
+            self.setPassword(input())
+            user_password = self.password 
+            print("请确认你的密码") 
+            user_password = input() 
+            if user_password == self.password:             
+                account_information[user_name] = user_password
+                user_account_json = json.dumps(account_information)                     #这里是将用户的输入存入刚刚取出的字典中
+                fileUser = open('./用户数据','r+')                                       #这一行打开这个文件,并给予读写权限
+                fileUser.seek(0)                                                        #移动光标到首字节,以便覆盖掉以前的,防止有多个字典,然后读取出错
+                fileUser.write(user_account_json)                                       #写入文件中
+                fileUser.close()                                                        #最后不要忘了关闭这个文件
+                return LOGIN_SUCCESS_STUDENT
+            else:
+                print("两次输入密码不同,输入 1 继续,其他输入将退出注册")
+                go_on = input()
+                if go_on != str(GO_ON):
+                    return LOGIN_OUT
+        
 
 
 class administratorsClass(Member):
@@ -145,7 +163,7 @@ class administratorsClass(Member):
             if root_password != 'helloword':
                 sign_in.myPrint("密码错误,重新输入请输入 1 ,否则视为终止登陆")
                 signal = input()
-                if signal != '1':
+                if signal != str(GO_ON):
                     return LOGIN_OUT
                 else:
                     self.setPassword(input())

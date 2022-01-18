@@ -1,25 +1,17 @@
 - !!python/object:book.Book
   book_name: run
   book_number: ['1', '2', '3', '4', '5', '6', '7']
-  book_stock: 6
+  book_stock: 7
   leave_time: 1642475084
   mark: Sports
   return_time: 0
   root_change: []
 - !!python/object:book.Book
-  book_name: H2O
-  book_number: ['10', '11', '12', '13', '14', '15', '16', '17']
+  book_name: H3O
+  book_number: ['10', '11', '12', '13', '14', '15', '16', '100']
   book_stock: 8
   leave_time: 0
   mark: Chemistry
-  return_time: 0
-  root_change: []
-- !!python/object:book.Book
-  book_name: highmath
-  book_number: ['18', '19', '20', '21', '22', '23', '24', '25', '26', '27']
-  book_stock: 10
-  leave_time: 0
-  mark: math
   return_time: 0
   root_change: []
 - !!python/object:book.Book

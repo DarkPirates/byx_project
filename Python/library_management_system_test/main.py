@@ -17,29 +17,43 @@ LOGIN_ERROR = -1
 LOGIN_OUT = 0
 DEFAULT = 0
 END = 0
+ROOT = 1
+QUERY = 1
+REGISTER = 1
+RETURN_START = 1
 LOGIN_SUCCESS_STUDENT = 1
+BORROW = 2
 LOGIN_SUCCESS_ROOT = 2
+STUDENT = 2
+RETURN = 3
 
 def sign_Login():
-    print("是否需要注册")
+    print("是否需要注册(1:注册,其他任意数字:退出)")
     sign_flag = input()
     return_value = DEFAULT
-    if sign_flag == '是':
-        print("输入帐号, id")
-        user_sign = User(input(), input())
+    if sign_flag == str(REGISTER):
+        print("输入帐号")
+        user_sign = User(input())
         return_value = user_sign.registerAccounts()
-    print("是否需要登陆(管理员 / 学生)")
-    sign_flag = input()
-    if sign_flag == '管理员':
-        print("输入帐号密码")
-        root_sign = administratorsClass(input())
-        return_value = root_sign.loginIn()
-    elif sign_flag == '学生':
-        print("输入帐号, id")
-        user_sign = User(input(), input())
-        return_value = user_sign.loginIn()
-    return return_value
-
+        if return_value == LOGIN_OUT:
+            return END
+    while True:
+        print("是否需要登陆(选择 1.管理员 或者 2.学生)")
+        sign_flag = input()
+        if sign_flag == str(ROOT):
+            print("输入管理员的帐号密码")
+            root_sign = administratorsClass(input())
+            return_value = root_sign.loginIn()
+            return return_value
+        elif sign_flag == str(STUDENT):
+            print("输入学生的帐号")
+            user_sign = User(input())
+            return_value = user_sign.loginIn()
+            return return_value
+        else:
+            print("你的选择输入错误,退出")
+            return LOGIN_ERROR
+    
 ##
 #@brief 管理员函数
 #
@@ -93,14 +107,14 @@ def rootJurisdiction():
 #
 ##
 def student():
-    print("需要做什么?查询 / 借阅 / 归还")
+    print("需要做什么? 1.查询 / 2.借阅 / 3.归还")
     while True:
         student_input = input()
-        if student_input == '查询':
+        if student_input == str(QUERY):
             borrow.seeQuery()
-            print("回到顶层?")
+            print("1.回到顶层 其他输入将会退出")
             student_input = input()
-            if student_input == '回到顶层':
+            if student_input == str(RETURN_START):
                 continue
             else:
                 break
@@ -122,7 +136,6 @@ def main():
         student()
     elif sign_return == LOGIN_SUCCESS_ROOT:
         rootJurisdiction()
-    print(sign_return)
 
 if __name__ == '__main__':
     main()
