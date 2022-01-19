@@ -16,6 +16,11 @@ NULL = 0
 EMPTYSCHOOLBAG = 0
 DEFAULTTIME = 0
 FRIST = 0
+EXIT = 1
+CHECK_OUT = 1
+ADD = 2
+DELETE = 2
+CHECK_OUT_BAG = 3
 
 ##
 # @brief 遍历列表
@@ -25,7 +30,7 @@ def ergodicFile():
     #while循环遍历列表, i是用来满足遍历的条件
     i = LOOP
     while i < len(list_book_information):
-        print(list_book_information[i].getBookNumber(), list_book_information[i].getBookName())
+        print(list_book_information[i].getBookName(), list_book_information[i].getBookNumber(),  list_book_information[i].getMark())
         i += 1
     administrators.writeFile(list_book_information)
 ##
@@ -80,9 +85,7 @@ def readBorrow():
 # @revalue list_book_information[i] 返回一个Book类型,将要借出的那本书的编号去除之后,应该将此书返回回来
 ##
 def liquidationABook(a_book,a_book_number):
-    print(type(a_book))
     borrow_information = readBorrow()
-
     borrow_number = len(borrow_information)
     #if borrow_number == NULL:
     a_book.getBookNumber().remove(a_book_number)
@@ -117,15 +120,14 @@ def borrowBookStep(book_name, a_book_number, mark, condition, book_bag):
             if list_book_information[i - 1].getBookName() == book_name:             #根据书名进行筛选
                 findNumber = list_book_information[i - 1].getBookNumber()           #将书本编号列表提取出来
                 operation_number = len(findNumber)      
-                while operation_number:  
-                    print(operation_number)                               
+                while operation_number:                               
                     if findNumber[operation_number - 1] == a_book_number:         #找到该编号的书本
-                        if condition == "结算":
+                        if condition == str(CHECK_OUT):
                             list_book_information[i - 1] = liquidationABook(list_book_information[i - 1], a_book_number)       #对该书本进行结算
                             list_book_information[i - 1].book_stock = len(list_book_information[i - 1].getBookNumber()) 
                             administrators.writeFile(list_book_information)
                             return book_bag
-                        elif condition == "加入":
+                        elif condition == str(ADD):
                             new_book_number = [a_book_number]
                             new_book = Book(list_book_information[i - 1].getBookName(), list_book_information[i - 1].getLeaveTime(), 
                                             list_book_information[i - 1].getReturnTime(), new_book_number, list_book_information[i - 1].getMark(), 
@@ -153,16 +155,18 @@ def borrowBook():
         if len(book_bag) > 5:
             print('已经达到上限,自动退出选书环节')
             return book_bag
+        ergodicFile()
         print('输入你要看得书名, 书本编号, 类别')
         book_name = input()
         input_book_number = input()
         book_mark = input()
-        print('结算还是加入书包')
+        print('1.结算 还是 2.加入书包')
         conclusion = input()
         this_book = borrowBookStep(book_name, input_book_number, book_mark, conclusion, book_bag)
-        print('是否退出借书环节')
-        if input() == '是':
-            clearBookBag(book_bag)
+        print('输入 1 退出借书环节')
+        if input() == str(EXIT):
+            if len(book_bag) != NULL:
+                bookBag(book_bag)
             return 
 
 ##
@@ -171,9 +175,8 @@ def borrowBook():
 # @param book_bag<list> 
 ##
 def clearBookBag(book_bag):
-    print(len(book_bag))
+    bookBagErgodic(book_bag)
     list_book_information = readBorrow()
-    print(type(list_book_information))
     print('输入你的帐号')
     name = input()
     i = LOOP
@@ -213,21 +216,49 @@ def bookBagErgodic(book_bag):
 def bookBag(book_bag):
     while True:
         bookBagErgodic(book_bag)
-        list_book_information = readBorrow()
-        print('结算?还是删除')
-        if input() == '结算':
-            clearBookBag(book_bag)
-        else:
-            print('输入你要删除的书的编号')
-            inputBookNumber = input()
-            i = LOOP
-            while i < len(book_bag):
-                if book_bag[i].getBookNumber() == inputBookNumber:
-                    book_bag.remove(book_bag[i])
-                i += 1
         if len(book_bag) == EMPTYSCHOOLBAG:
             print('书包为空')
             return EMPTYSCHOOLBAG
+        list_book_information = readBorrow()
+        while True:
+            print('1.结算 还是 2.删除 3.退出')
+            check = input()
+            if check == str(CHECK_OUT):
+                clearBookBag(book_bag)
+                return
+            elif check == str(DELETE):
+                print('输入你要删除的书的编号')
+                bookBagErgodic(book_bag)
+                inputBookNumber = input()
+                i = LOOP
+                while i < len(book_bag):
+                    if (book_bag[i].getBookNumber())[i] == inputBookNumber:
+                        list_book_information_flag = administrators.readFile()
+                        list_book_information_number = len(list_book_information_flag)
+                        while list_book_information_number:
+                            if list_book_information_flag[list_book_information_number - 1].getBookName() == book_bag[i].getBookName():
+                                if list_book_information_flag[list_book_information_number - 1].getMark() == book_bag[i].getMark():
+                                    list_book_information_flag[list_book_information_number - 1].getBookNumber().extend(book_bag[i].getBookNumber())
+                                    administrators.writeFile(list_book_information_flag)
+                            list_book_information_number -= 1
+                        book_bag.remove(book_bag[i])
+                    i += 1
+            elif check == str(CHECK_OUT_BAG):
+                list_book_information_flag = administrators.readFile()
+                list_book_information_number = len(list_book_information_flag)
+                i = LOOP
+                while i < len(book_bag):
+                    while list_book_information_number:
+                        if list_book_information_flag[list_book_information_number - 1].getBookName() == book_bag[i].getBookName():
+                            if list_book_information_flag[list_book_information_number - 1].getMark() == book_bag[i].getMark():
+                                list_book_information_flag[list_book_information_number - 1].getBookNumber().extend(book_bag[i].getBookNumber())
+                        list_book_information_number -= 1
+                    book_bag.remove(book_bag[i])
+                    i += 1
+                administrators.writeFile(list_book_information_flag)    
+                return 
+            else:
+                print("输入错误,重试")
 
 ##
 # @brief 归还遍历

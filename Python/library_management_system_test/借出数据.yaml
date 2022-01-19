@@ -17,14 +17,6 @@
   root_change: []
 - !!python/object:book.Book
   book_name: highmath
-  book_number: ['27']
-  book_stock: 10
-  leave_time: 0
-  mark: math
-  return_time: 0
-  root_change: []
-- !!python/object:book.Book
-  book_name: highmath
   book_number: ['26']
   book_stock: 1
   leave_time: 1642485502
@@ -32,3 +24,12 @@
   return_time: 0
   root_change:
   - '26': [uiiu, 1642485763, 0, -1642485763]
+- !!python/object:book.Book
+  book_name: highmath
+  book_number: ['25']
+  book_stock: 1
+  leave_time: 1642485502
+  mark: math
+  return_time: 0
+  root_change:
+  - '25': [byx, 1642486014, 0, -1642486014]

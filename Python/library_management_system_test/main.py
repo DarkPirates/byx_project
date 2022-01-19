@@ -109,6 +109,7 @@ def rootJurisdiction():
 def student():
     print("需要做什么? 1.查询 / 2.借阅 / 3.归还")
     while True:
+        print("当前在选择层 1.查询 / 2.借阅 / 3.归还 其他输入返回上一层")
         student_input = input()
         if student_input == str(QUERY):
             borrow.seeQuery()
@@ -118,10 +119,10 @@ def student():
                 continue
             else:
                 break
-        elif student_input == '归还':
-            borrow.giveBack()
-        elif student_input == '借阅':
+        elif student_input == str(BORROW):
             borrow.borrowBook()
+        elif student_input == str(RETURN):
+            borrow.giveBack()
         else:
             break      
 
