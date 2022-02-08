@@ -189,7 +189,7 @@ def changeBookType():
             find_flag = 1
         i += 1
     if find_flag == 0:
-        print("没找到喔=-=")
+        print("没找到喔")
     else:
         print("修改成功")
     writeFile(list_book_information)
