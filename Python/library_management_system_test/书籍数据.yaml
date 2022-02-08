@@ -1,14 +1,4 @@
 - !!python/object:book.Book
-  book_name: run
-  book_number: ['3', '4', '5', '6', '2']
-  book_stock: 4
-  leave_time: 1642557197
-  mark: Sports
-  return_time: 0
-  root_change:
-  - '7': [ui, 1642556895, 0, -1642556895]
-  - '1': [byx, 1642557203, 0, -1642557203]
-- !!python/object:book.Book
   book_name: H3O
   book_number: ['10', '11', '12', '13', '14', '15', '16', '100']
   book_stock: 8

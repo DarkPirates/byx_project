@@ -160,10 +160,10 @@ def borrowBook():
         book_name = input()
         input_book_number = input()
         book_mark = input()
-        print('1.结算 还是 2.加入书包')
+        print('1.结算 还是 2.加入备选')
         conclusion = input()
         this_book = borrowBookStep(book_name, input_book_number, book_mark, conclusion, book_bag)
-        print('输入 1 退出借书环节')
+        print('输入 1 退出借书环节,对备选书进行管理')
         if input() == str(EXIT):
             if len(book_bag) != NULL:
                 bookBag(book_bag)
@@ -287,7 +287,7 @@ def giveBackErgodic(book_number):
             if list_book_information[book_type_number - 1].getBookName() == this_book.getBookName():
                 list_book_information[book_type_number - 1].getBookNumber().extend(this_book.getBookNumber())
                 list_book_information[book_type_number - 1].getRootChange().extend(this_book.getRootChange())
-            list_book_information[i - 1].book_stock = len(list_book_information[i - 1].getBookNumber())
+                list_book_information[book_type_number - 1].book_stock = len(list_book_information[book_type_number - 1].getBookNumber())
         book_type_number -= 1   
     administrators.writeFile(list_book_information)
 
@@ -351,20 +351,22 @@ def seeQuery():
 ##
 # @brief 查看所有的借阅记录 all in
 ##
-def seeAllQuery():
+def seeAllQuery(input_book_name):
     list_book_infhormation = administrators.readFile()
     borrow_information = readBorrow()
     i = NULL
     while i < len(list_book_infhormation):
-        lib_information = list_book_infhormation[i].getRootChange()
-        if len(lib_information) != 0:
-            print(lib_information)
+        if list_book_infhormation[i].getBookName() == input_book_name:
+            lib_information = list_book_infhormation[i].getRootChange()
+            if len(lib_information) != 0:
+                print(lib_information)
         i += 1
     i = NULL
     while i < len(borrow_information):
-        lib_information = borrow_information[i].getRootChange()
-        if len(lib_information) != 0:
-            print(lib_information)
+        if list_book_infhormation[i].getBookName() == input_book_name:
+            lib_information = borrow_information[i].getRootChange()
+            if len(lib_information) != 0:
+                print(lib_information)
         i += 1
 def test():
     pass

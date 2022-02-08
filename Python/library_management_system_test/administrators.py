@@ -14,7 +14,6 @@ import yaml
 
 from book import Book
 
-
 NO_FIND = -1
 INPUTERROR = -1
 LOOP = 0
@@ -22,6 +21,7 @@ TIME_INIT = 0
 NONE = 0
 EXISTENCE = 0
 TEACH = 1
+GOON = 1
 SCIENCE = 2
 POPULAR = 3
 NOVEL = 4
@@ -61,8 +61,8 @@ def checkBook(book_name, a_book_number):
                 if book_number[check_number - 1] == a_book_number:
                     return_value_book.append(check_book - 1)
                     return_value_book.append(check_number - 1)
-                    print("已经存在该编号, 忽略还是继续")
-                    if input() == '继续':
+                    print("已经存在该编号, 1.继续 ,其他输入为忽略")
+                    if int(input()) == GOON:
                         return return_value_book
                     else:
                         return EXISTENCE
@@ -80,9 +80,12 @@ def inputBookInformation():
     print("输入书名")
     book_name = input()
     list_book_information = readFile()
-    if book_name in list_book_information:
-        print("已经存在该书,请移步去添加书本")
-        return
+    i = LOOP
+    while i < len(list_book_information):
+        if list_book_information[i].getBookName() == book_name:
+            print("书名存在,请去添加书本添加内容喔")
+            return
+        i += 1
     leave_time = TIME_INIT
     return_time = TIME_INIT
     book_number = []
@@ -131,7 +134,7 @@ def ergodicFile(list_book_information):
     #while循环遍历列表, i是用来满足遍历的条件
     i = LOOP
     while i < len(list_book_information):
-        print(list_book_information[i].getMark(), list_book_information[i].getBookName())
+        print(len(list_book_information),i,list_book_information[i].getMark(), list_book_information[i].getBookName())
         i += 1
 
 ##
@@ -149,6 +152,7 @@ def addBookType():
 # @brief 减少书籍
 ##
 def deleteBookType():
+    find_flag = 0
     list_book_information = readFile()
     ergodicFile(list_book_information)
     print('输入你要删除的书籍类别')
@@ -157,23 +161,37 @@ def deleteBookType():
     while i:
         if list_book_information[i - 1].getMark() == inputBookMark:
             list_book_information.remove(list_book_information[i - 1])
+            find_flag = 1
         i -= 1
+    if find_flag == 0:
+        print("没找到喔=-=")
+    else:
+        print("删除成功")
     writeFile(list_book_information)
 
 ##
 # @brief 更改书籍信息
 ##
 def changeBookType():
+    find_flag = 0
     list_book_information = readFile()
     ergodicFile(list_book_information)
     print('输入你要更改的书名')
     inputBookName = input()
     i = LOOP
     while i < len(list_book_information):
+        print(list_book_information[i].getBookName())
         if list_book_information[i].getBookName() == inputBookName:
+            print("输入新的书名")
             list_book_information[i].setBookName(input())
+            print("输入新的类型名")
             list_book_information[i].setMartk(input())
+            find_flag = 1
         i += 1
+    if find_flag == 0:
+        print("没找到喔=-=")
+    else:
+        print("修改成功")
     writeFile(list_book_information)
 
 ##
@@ -210,6 +228,7 @@ def addBook():
 
 ##
 # @brief 减少书本
+#
 ##
 def deleteBook():
     while True:
@@ -223,7 +242,7 @@ def deleteBook():
         list_book = subscript[0]
         list_book_number = subscript[1]
         if subscript == NO_FIND:
-            #print("没找到")
+            print("没找到")
             continue
         else:
             list_book_information_number = list_book_information[list_book].getBookNumber()
@@ -232,6 +251,7 @@ def deleteBook():
 
 ##
 # @brief 更改书本
+#
 ##
 def changeBook():
     while True:

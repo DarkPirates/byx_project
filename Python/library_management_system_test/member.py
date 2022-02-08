@@ -166,6 +166,7 @@ class administratorsClass(Member):
                 if signal != str(GO_ON):
                     return LOGIN_OUT
                 else:
+                    sign_in.myPrint("输入你的密码")
                     self.setPassword(input())
             else:
                 return LOGIN_SUCCESS_ROOT

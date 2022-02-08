@@ -17,14 +17,24 @@ LOGIN_ERROR = -1
 LOGIN_OUT = 0
 DEFAULT = 0
 END = 0
+PERSONAR = 1
+GOON = 1
 ROOT = 1
 QUERY = 1
 REGISTER = 1
 RETURN_START = 1
 LOGIN_SUCCESS_STUDENT = 1
+ADDTYPE = 1
+ADDBOOK = 1
+DELETEBOOK = 2
+DELETETYPE = 2
 BORROW = 2
+BOOKNAME = 2
 LOGIN_SUCCESS_ROOT = 2
 STUDENT = 2
+CHANGETYPE = 3
+BOOKTYPE = 3
+CHANGEBOOK = 3
 RETURN = 3
 
 def sign_Login():
@@ -53,51 +63,85 @@ def sign_Login():
         else:
             print("你的选择输入错误,退出")
             return LOGIN_ERROR
-    
+
 ##
-#@brief 管理员函数
+# @brief 对书籍以及书本的管理(增删改)
 #
 ##
-def rootJurisdiction():
-    print("查询借阅记录(个人还是总体)还是对图书进行管理")   
+def choiceBookOrType():
+    print("你要怎么操作书?增删改书籍(3.书籍 / 2.书本)?其他输入表示退出本层")
     while True:
-        root_input = input()
-        if root_input == '总体':
-            borrow.seeAllQuery()
-        elif root_input == '个人':
-            print("输入你要看得学生的用户名")
-            borrow.seeQuery()
-        elif root_input == '图书':
-            print("你要怎么操作书?增删改书籍(书籍或者书本)?其他输入表示退出本层")
+        print("当前在选择更改目录(3.书籍 / 2.书本)")
+        root_input = int(input())
+        if root_input == BOOKTYPE:
             while True:
-                print("当前在选择更改目录")
-                root_input = input()
-                if root_input == '书籍':
+                print("当前在书籍类型目录,1.增加 / 2.减少 / 3.更改 / 其他输入返回上一层")
+                root_input = int(input())
+                if root_input == ADDTYPE:
                     while True:
-                        print("当前在书籍类型目录")
-                        root_input = input()
-                        if root_input == '增加类型':
-                            administrators.addBookType()
-                        elif root_input == '减少类型':
-                            administrators.deleteBookType()
-                        elif root_input == '更改类型':
-                            administrators.changeBookType()
-                        else:
+                        administrators.addBookType()
+                        print("继续增加输入 1 ,否则返回上一层")
+                        if int(input()) != GOON:
                             break
-                elif root_input == '书本':
+                elif root_input == DELETETYPE:
                     while True:
-                        print("当前在书本目录")
-                        root_input = input()
-                        if root_input == '增加书本':
-                            administrators.addBook()
-                        elif root_input == '减少书本':
-                            administrators.deleteBook()
-                        elif root_input == '更改书本':
-                            administrators.changeBook()
-                        else:
+                        administrators.deleteBookType()
+                        print("继续删除输入 1 ,否则返回上一层")
+                        if int(input()) != GOON:
+                            break
+                elif root_input == CHANGETYPE:
+                    while True:
+                        administrators.changeBookType()
+                        print("继续修改输入 1 ,否则返回上一层")
+                        if int(input()) != GOON:
                             break
                 else:
                     break
+        elif root_input == BOOKNAME:
+            while True:
+                print("当前在书本目录")
+                root_input = int(input())
+                if root_input == ADDBOOK:
+                    while True:
+                        administrators.addBook()
+                        print("继续增加输入 1 ,否则返回上一层")
+                        if int(input()) != GOON:
+                            break
+                elif root_input == DELETEBOOK:
+                    while True:
+                        administrators.deleteBook()
+                        print("继续增加输入 1 ,否则返回上一层")
+                        if int(input()) != GOON:
+                            break
+                elif root_input == CHANGEBOOK:
+                    while True:
+                        administrators.changeBook()
+                        print("继续增加输入 1 ,否则返回上一层")
+                        if int(input()) != GOON:
+                            break
+                else:
+                    break
+        else:
+            break
+
+    
+##
+# @brief 管理员函数
+#
+##
+def rootJurisdiction():
+    print("查询借阅记录(1.个人 / 2.书本)还是对 3.图书 进行管理,其他输入表示退出本层")   
+    while True:
+        root_input = input()
+        if int(root_input) == BOOKNAME:
+            print("你要查询哪一本书的借阅记录,输入书名")
+            input_book_name = input()
+            borrow.seeAllQuery(input_book_name)
+        elif int(root_input) == PERSONAR:
+            print("输入你要看得学生的用户名")
+            borrow.seeQuery()
+        elif int(root_input) == BOOKTYPE:
+            choiceBookOrType()
         else:
             break
 
@@ -109,7 +153,7 @@ def rootJurisdiction():
 def student():
     print("需要做什么? 1.查询 / 2.借阅 / 3.归还")
     while True:
-        print("当前在选择层 1.查询 / 2.借阅 / 3.归还 其他输入返回上一层")
+        print("当前在选择层 1.查询 / 2.借阅 / 3.归还 / 4.退出")
         student_input = input()
         if student_input == str(QUERY):
             borrow.seeQuery()
@@ -122,7 +166,12 @@ def student():
         elif student_input == str(BORROW):
             borrow.borrowBook()
         elif student_input == str(RETURN):
-            borrow.giveBack()
+            while True:
+                borrow.giveBack()
+                print("是否要继续归还书本? 1.继续 其他输入默认退出归还")
+                input_giveback_goon = input()
+                if input_giveback_goon != GOON:
+                    break
         else:
             break      
 

@@ -8,14 +8,6 @@
   root_change:
   - '4': [byx, 0, 1642321996, 1642321996]
 - !!python/object:book.Book
-  book_name: run
-  book_number: ['8']
-  book_stock: 1
-  leave_time: 0
-  mark: Sports
-  return_time: 0
-  root_change: []
-- !!python/object:book.Book
   book_name: highmath
   book_number: ['26']
   book_stock: 1
